@@ -74,7 +74,7 @@ function DefaultLayout({ children }) {
                 className={`${
                   activeRoute === item.path &&
                   "border-l-4 border-white rounded-lg bg-blue-800"
-                } " text-[20px] gap-[10px] mr-[10px] text-white flex items-center hover:bg-blue-800 hover:rounded-lg duration-200 justify-start py-[5px] px-[15px] w-full cursor-pointer transition-[0.2s]"`}
+                } " text-[20px] gap-10 mr-[10px] text-white flex items-center hover:bg-blue-800 hover:rounded-lg duration-200 justify-start py-[5px] px-[15px] w-full cursor-pointer transition-[0.2s]"`}
               >
                 <i className={item.icon}></i>
                 {!collapsed && (
