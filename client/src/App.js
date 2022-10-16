@@ -9,9 +9,9 @@ import Loader from "./components/Loader";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
-import AdminBuses from "./pages/AdminBuses";
-import AdminHome from "./pages/AdminHome";
-import AdminUsers from "./pages/AdminUsers";
+import AdminBuses from "./pages/Admin/AdminBuses";
+import AdminHome from "./pages/Admin/AdminHome";
+import AdminUsers from "./pages/Admin/AdminUsers";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
