@@ -25,7 +25,7 @@ const busSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  JourneyDate: {
+  journeyDate: {
     type: Date,
     required: true,
   },
