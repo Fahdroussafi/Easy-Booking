@@ -26,7 +26,7 @@ const busSchema = new mongoose.Schema({
     required: true,
   },
   journeyDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   capacity: {
