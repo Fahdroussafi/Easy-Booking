@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 function ProtectedRoute({ children }) {
   const [loading, setLoading] = useState(true);
@@ -20,9 +21,13 @@ function ProtectedRoute({ children }) {
         setLoading(false);
       } else {
         setLoading(false);
+        localStorage.removeItem("token");
+        message.error(response.data.message);
         navigate("/login");
       }
     } catch (error) {
+      localStorage.removeItem("token");
+      message.error(error.message);
       setLoading(false);
       navigate("/login");
     }
