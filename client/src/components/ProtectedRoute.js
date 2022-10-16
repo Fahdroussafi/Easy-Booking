@@ -1,13 +1,13 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function ProtectedRoute() {
+function ProtectedRoute({ children }) {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const validateToken = () => {
+  const validateToken = async () => {
     try {
-      const response = axios.post(
+      const response = await axios.post(
         "/api/users/get-user-by-id",
         {},
         {
@@ -16,7 +16,7 @@ function ProtectedRoute() {
           },
         }
       );
-      if (response.status) {
+      if (response.data.success) {
         setLoading(false);
       } else {
         setLoading(false);
@@ -29,14 +29,14 @@ function ProtectedRoute() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       validateToken();
     } else {
       navigate("/login");
     }
   }, []);
 
-  return <div>{loading ? <div>Loading...</div> : <>{Children}</>}</div>;
+  return <div>{loading ? <div>Loading...</div> : <>{children}</>}</div>;
 }
 
 export default ProtectedRoute;
