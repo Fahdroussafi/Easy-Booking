@@ -27,11 +27,19 @@ function Login() {
   };
   return (
     <Form onFinish={onFinish}>
-      <div className="bg-white min-h-screen flex flex-col ">
+      <div
+        className="bg-white min-h-screen flex flex-col "
+        style={{
+          backgroundSize: "cover",
+          backgroundImage: `url("https://img5.goodfon.com/wallpaper/nbig/6/6a/temsa-maraton-coach-bus.jpg")`,
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-          <div className="bg-gray-50 px-6 py-8 rounded-xl shadow-xl text-black w-full border-2">
+          <div className="bg-gray-50 bg-opacity-80 px-6 py-8 rounded-xl shadow-xl text-black w-full border-2">
             <h1 className="mb-8 text-3xl text-center font-bold hover:animate-bounce">
-              LOGIN
+              Sign in
             </h1>
             <Form.Item
               name="email"
@@ -50,7 +58,6 @@ function Login() {
                 placeholder="Email"
               />
             </Form.Item>
-
             <Form.Item
               name="password"
               initialValue=""
@@ -78,6 +85,16 @@ function Login() {
                 LOGIN
               </button>
             </div>
+            <p className="text-center text-base text-gray-600 mt-4">
+              Don't have an account?
+              <a
+                className="no-underline border-b border-gray-500 text-gray-500"
+                href="/register"
+              >
+                {" "}
+                Register
+              </a>
+            </p>
           </div>
         </div>
       </div>
