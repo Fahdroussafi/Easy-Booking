@@ -2,6 +2,7 @@ import "./index.css";
 import "antd/dist/antd.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import BookNow from "./pages/BookNow";
 import Bookings from "./pages/Bookings";
 import Profile from "./pages/Profile";
 import Index from "./pages/Index";
@@ -19,7 +20,7 @@ import AdminBookings from "./pages/Admin/AdminBookings";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
-    <div className="App">
+    <div className="App bg-slate-50">
       {loading && <Loader />}
       <BrowserRouter>
         <Routes>
@@ -46,6 +47,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Bookings />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/book-now/:id"
+            element={
+              <ProtectedRoute>
+                <BookNow />
               </ProtectedRoute>
             }
           />
