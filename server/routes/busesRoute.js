@@ -3,7 +3,7 @@ const Bus = require("../models/busModel");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 // Add a new bus
-router.post("/add-bus", async (req, res) => {
+router.post("/add-bus", authMiddleware, async (req, res) => {
   try {
     const existingBus = await Bus.findOne({ busNumber: req.body.busNumber });
     if (existingBus) {
@@ -24,7 +24,7 @@ router.post("/add-bus", async (req, res) => {
 });
 
 // get all buses
-router.post("/get-all-buses", authMiddleware, async (req, res) => {
+router.get("/get-all-buses", async (req, res) => {
   try {
     const buses = await Bus.find();
     return res.status(200).send({
@@ -38,7 +38,7 @@ router.post("/get-all-buses", authMiddleware, async (req, res) => {
 });
 
 // update a bus
-router.post("/update-bus", authMiddleware, async (req, res) => {
+router.put("/update-bus", authMiddleware, async (req, res) => {
   try {
     await Bus.findByIdAndUpdate(req.body._id, req.body);
     res.status(200).send({
@@ -51,7 +51,7 @@ router.post("/update-bus", authMiddleware, async (req, res) => {
 });
 
 // delete a bus
-router.post("/delete-bus", authMiddleware, async (req, res) => {
+router.delete("/delete-bus", authMiddleware, async (req, res) => {
   try {
     await Bus.findByIdAndDelete(req.body._id);
     res.status(200).send({
@@ -59,12 +59,12 @@ router.post("/delete-bus", authMiddleware, async (req, res) => {
       success: true,
     });
   } catch (error) {
-    res.status(500).send({ success: false, message: error.message });
+    res.status(500).send();
   }
 });
 
 // get bus by id
-router.post("/get-bus-by-id", authMiddleware, async (req, res) => {
+router.post("/get-bus-by-id",  async (req, res) => {
   try {
     const bus = await Bus.findById(req.body._id);
     res.status(200).send({
