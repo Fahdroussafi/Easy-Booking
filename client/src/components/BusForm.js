@@ -1,11 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Modal, Row, Form, Col, Input, message } from "antd";
+import { Modal, Row, Form, Col, message } from "antd";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
-import moment from "moment";
 
-function BusForm({
+function BusForm({ 
   showBusForm,
   setShowBusForm,
   type = "add",
@@ -22,7 +21,7 @@ function BusForm({
       if (type === "add") {
         response = await axiosInstance.post("/api/buses/add-bus", values);
       } else {
-        response = await axiosInstance.post("/api/buses/update-bus", {
+        response = await axiosInstance.put("/api/buses/update-bus", {
           ...values,
           _id: selectedBus._id,
         });
