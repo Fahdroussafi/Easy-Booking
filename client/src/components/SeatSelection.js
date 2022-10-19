@@ -15,15 +15,19 @@ function SeatSelection({ selectedSeats, setSelectedSeats, bus }) {
     <div>
       <div className="w-[300px] border-2 border-black p-[10px] ">
         <Row gutter={[10, 10]}>
-          {Array.from(Array(capacity).keys()).map((seat) => {
-            let seatClass = ``;
+          {Array.from(Array(capacity).keys()).map((seat, key) => {
+            let seatClass = `cursor-pointer w-[30px] h-[30px] border-2 border-black flex justify-center items-center rounded-full `;
+            selectedSeats.includes(seat + 1);
             if (selectedSeats.includes(seat + 1)) {
-              seatClass = `bg-blue-600`;
+              seatClass = `bg-blue-500 cursor-pointer w-[30px] h-[30px] border-2 border-black flex justify-center items-center rounded-full`;
+            } else if (bus.seatsBooked.includes(seat + 1)) {
+              seatClass = `bg-red-500 pointer-events-none cursor-not-allowed w-[30px] h-[30px] border-2 border-black flex justify-center items-center rounded-full `;
             }
+
             return (
-              <Col span={6}>
+              <Col key={key} span={6}>
                 <div
-                  className={`flex items-center justify-center border-[1px] p-3 border-solid border-gray-500 rounded-[2px] cursor-pointer ${seatClass}`}
+                  className={`seat flex items-center  justify-center border-[1px] p-3 border-solid border-gray-500 rounded-[2px] ${seatClass}`}
                   onClick={() => {
                     selectOrUnselectSeat(seat + 1);
                   }}
