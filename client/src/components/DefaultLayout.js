@@ -58,19 +58,20 @@ function DefaultLayout({ children }) {
   const menutoBeRendered = user?.isAdmin ? adminMenu : userMenu;
   const activeRoute = window.location.pathname;
   return (
-    <div className="layout-parent flex w-full p-[15px] h-[100vh] gap-[20px]">
-      <div className="sidebar bg-blue-600 rounded-[5px] flex flex-col justify-start px-5 py-0  ">
+    <div className="flex w-full h-[100vh] gap-[20px]">
+      <div className="bg-blue-600 rounded-[5px] flex flex-col justify-start px-5 py-0  ">
         <div className="sidebar-header">
           <h1 className="text-white text-[20px] mb-0 p-0 ">Easy-Booking</h1>
-          <h1 className="role text-white text-[16px] mb-0 p-0 ">
+          <h1 className="text-white text-[16px] mb-0 p-0 ">
             {user?.name} <br />
             Role :{user?.isAdmin ? "Admin" : "User"}
           </h1>
         </div>
         <div className="flex flex-col gap-5 justify-start mt-[150px] ">
-          {menutoBeRendered.map((item, index) => {
+          {menutoBeRendered.map((item, key) => {
             return (
               <div
+                key={key}
                 className={`${
                   activeRoute === item.path &&
                   "border-l-4 border-white rounded-lg bg-blue-800"
@@ -82,6 +83,7 @@ function DefaultLayout({ children }) {
                     onClick={() => {
                       if (item.path === "/logout") {
                         localStorage.removeItem("token");
+                        localStorage.removeItem("user_id");
                         navigate("/login");
                       } else {
                         navigate(item.path);
@@ -97,8 +99,8 @@ function DefaultLayout({ children }) {
         </div>
       </div>
 
-      <div className="body w-full">
-        <div className="header shadow-lg w-full p-5  ">
+      <div className="w-full">
+        <div className="shadow-lg w-full p-5 hover:shadow-2xl duration-300 ">
           {collapsed ? (
             <i
               className="ri-menu-2-fill cursor-pointer text-[30px]"
@@ -115,7 +117,7 @@ function DefaultLayout({ children }) {
             ></i>
           )}
         </div>
-        <div className="content p-[10px]">{children}</div>
+        <div className="p-[10px] px-0">{children}</div>
       </div>
     </div>
   );
