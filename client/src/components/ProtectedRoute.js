@@ -8,6 +8,7 @@ import { ShowLoading, HideLoading } from "../redux/alertsSlice";
 import DefaultLayout from "./DefaultLayout";
 
 function ProtectedRoute({ children }) {
+  const user_id = localStorage.getItem("user_id");
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.users);
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ function ProtectedRoute({ children }) {
     try {
       dispatch(ShowLoading());
 
-      const response = await axios.post(
-        "/api/users/get-user-by-id",
+      const response = await axios.get(
+        `/api/users/${user_id} `,
         {},
         {
           headers: {
@@ -28,11 +29,13 @@ function ProtectedRoute({ children }) {
       if (response.data.success) {
         dispatch(SetUser(response.data.data));
       } else {
+        localStorage.removeItem("user_id");
         localStorage.removeItem("token");
         message.error(response.data.message);
         navigate("/login");
       }
     } catch (error) {
+      localStorage.removeItem("user_id");
       localStorage.removeItem("token");
       message.error(error.message);
       dispatch(HideLoading());
