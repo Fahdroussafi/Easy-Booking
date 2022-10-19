@@ -1,5 +1,4 @@
 const User = require("../models/usersModel");
-const authMiddleware = require("../middlewares/authMiddleware");
 
 // get user by id
 

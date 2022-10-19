@@ -1,6 +1,4 @@
-const router = require("express").Router();
 const Bus = require("../models/busModel");
-const authMiddleware = require("../middlewares/authMiddleware");
 
 // Add a new bus
 const AddBus = async (req, res) => {
