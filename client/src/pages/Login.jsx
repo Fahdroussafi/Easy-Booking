@@ -11,11 +11,13 @@ function Login() {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/users/login", values);
+      const response = await axios.post("/api/auth/login", values);
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);
         localStorage.setItem("token", response.data.data);
+        localStorage.setItem("user_id", response.data.user._id);
+
         navigate("/easy-booking");
       } else {
         message.error(response.data.message);
