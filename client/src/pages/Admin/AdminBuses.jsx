@@ -32,9 +32,11 @@ function AdminBuses() {
   const deleteBus = async (_id) => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.delete("/api/buses/delete-bus", {
-        _id: _id,
-      });      
+      const response = await axiosInstance.delete(
+        `/api/buses/${_id}`,
+        {}
+      );
+
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);
