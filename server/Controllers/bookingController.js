@@ -1,7 +1,5 @@
-const router = require("express").Router();
 const Booking = require("../models/bookingsModel");
 const Bus = require("../models/busModel");
-const authMiddleware = require("../middlewares/authMiddleware");
 
 const BookSeat = async (req, res) => {
   try {
