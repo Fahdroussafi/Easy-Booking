@@ -8,15 +8,19 @@ const dbConfig = require("./config/dbConfig");
 app.use(cors());
 app.use(express.json());
 
-const usersRoute = require("./routes/usersRoute");
-const busesRoute = require("./routes/busesRoute");
-const bookingsRoute = require("./routes/bookingsRoute");
-
-app.use("/api/users", usersRoute);
-app.use("/api/buses", busesRoute);
-app.use("/api/bookings", bookingsRoute);
+app.use("/api/users", require("./routes/usersRoutes"));
+app.use("/api/buses", require("./routes/busesRoutes"));
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/bookings", require("./routes/bookingsRoutes"));
 
 // listen to port
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+// trip_type [
+//   type: Boolean,
+//   enum ["premium","normal","vip","economy"]
+//   default: "normal",
+// required : true
+// ]
