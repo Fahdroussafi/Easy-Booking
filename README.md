@@ -23,7 +23,7 @@
 
 ## Available Scripts
 
-### `npm client`
+### `cd client`
 ### `npm install`
 ### `npm start`
 
@@ -31,4 +31,5 @@
 ### `npm install`
 ### `npm start`
 
-# API documentation link https://documenter.getpostman.com/view/19939427/2s847LMr5Q
+# API documentation link :
+### https://documenter.getpostman.com/view/19939427/2s847LMr5Q
