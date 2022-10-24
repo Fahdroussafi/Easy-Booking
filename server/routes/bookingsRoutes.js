@@ -12,7 +12,7 @@ const {
 
 router.post("/book-seat", authMiddleware, BookSeat);
 router.get("/get-all-bookings", GetAllBookings);
-router.get("/:id", authMiddleware, GetAllBookingsByUser);
+router.get("/:user_Id", GetAllBookingsByUser);
 router.delete("/:id", CancelBooking);
 router.post("/make-payment", PayWithStripe);
 
