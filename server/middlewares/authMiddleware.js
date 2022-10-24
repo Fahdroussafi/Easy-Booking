@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
       });
     }
     const decodedToken = jwt.verify(token, process.env.jwt_secret);
-    req.body.userId = decodedToken.userId;
+    req.params.userId = decodedToken.userId;
     next();
   } catch (error) {
     res.status(401).send({
