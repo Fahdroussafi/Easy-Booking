@@ -12,22 +12,22 @@ function SeatSelection({ selectedSeats, setSelectedSeats, bus }) {
     }
   };
   return (
-    <div>
-      <div className="w-[300px] border-2 border-black p-[10px] ">
+    <div className="m-5">
+      <div className="w-[300px] border-2 border-black p-[10px]">
         <Row gutter={[10, 10]}>
           {Array.from(Array(capacity).keys()).map((seat, key) => {
-            let seatClass = `cursor-pointer w-[30px] h-[30px] border-2 border-black flex justify-center items-center rounded-full `;
+            let seatClass = `cursor-pointer w-[40px] h-[35px] border-2 border-black flex justify-center items-center rounded-full `;
             selectedSeats.includes(seat + 1);
             if (selectedSeats.includes(seat + 1)) {
-              seatClass = `bg-blue-500 cursor-pointer w-[30px] h-[30px] border-2 border-black flex justify-center items-center rounded-full`;
+              seatClass = `bg-blue-500 cursor-pointer w-[40px] h-[35px] border-2 border-black flex justify-center items-center rounded-full`;
             } else if (bus.seatsBooked.includes(seat + 1)) {
-              seatClass = `bg-red-500 pointer-events-none cursor-not-allowed w-[30px] h-[30px] border-2 border-black flex justify-center items-center rounded-full `;
+              seatClass = `bg-red-500 pointer-events-none cursor-not-allowed w-[40px] h-[35px] border-2 border-black flex justify-center items-center rounded-full `;
             }
 
             return (
               <Col key={key} span={6}>
                 <div
-                  className={`seat flex items-center  justify-center border-[1px] p-3 border-solid border-gray-500 rounded-[2px] ${seatClass}`}
+                  className={` border-[1px] text-black p-3 ${seatClass}`}
                   onClick={() => {
                     selectOrUnselectSeat(seat + 1);
                   }}
