@@ -31,10 +31,10 @@ function Home() {
   return (
     <div>
       <div></div>
-      <div>
+      <div className="z-20">
         <Row>
-          {buses.map((bus) => (
-            <Col lg={12} xs={24} sm={24}>
+          {buses.map((bus, key) => (
+            <Col key={key} lg={12} xs={24} sm={24}>
               <Bus bus={bus} />
             </Col>
           ))}
