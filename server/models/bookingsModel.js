@@ -4,12 +4,12 @@ const bookingSchema = new mongoose.Schema(
   {
     bus: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Bus",
+      ref: "buses",
       require: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "users",
       require: true,
     },
     seats: {
