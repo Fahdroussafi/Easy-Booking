@@ -5,12 +5,14 @@ import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import { Row, Col, message } from "antd";
 import { useParams } from "react-router-dom";
 import SeatSelection from "../components/SeatSelection";
+import StripeCheckout from "react-stripe-checkout";
 
 function BookNow() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const params = useParams();
   const dispatch = useDispatch();
   const [bus, setBus] = useState(null);
+  
   const getBus = async () => {
     try {
       dispatch(ShowLoading());
@@ -27,16 +29,38 @@ function BookNow() {
     }
   };
 
-  const bookNow = async () => {
+  const bookNow = async (transactionId) => {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.post("/api/bookings/book-seat", {
         bus: bus._id,
         seats: selectedSeats,
+        transactionId,
       });
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      message.error(error.message);
+    }
+  };
+
+  const onToken = async (token) => {
+    try {
+      dispatch(ShowLoading());
+      const response = await axiosInstance.post("/api/bookings/make-payment", {
+        token,
+        amount: selectedSeats.length * bus.price,
+      });
+
+      dispatch(HideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        bookNow(response.data.data.transactionId);
       } else {
         message.error(response.data.message);
       }
@@ -52,7 +76,7 @@ function BookNow() {
   return (
     <div>
       {bus && (
-        <Row className="m-3 p-5" gutter={20}>
+        <Row className="m-3 p-5" gutter={[30,30]}>
           <Col lg={12} xs={24} sm={24}>
             <h1 className="text-xl text-blue-500">{bus.name}</h1>
             <h1 className="text-lg">
@@ -94,16 +118,23 @@ function BookNow() {
                 <b> Price :</b> DH {bus.price * selectedSeats.length}
               </h1>
 
-              <button
-                className={`btn btn-primary bg-blue-600 hover:bg-blue-800 ${
-                  selectedSeats.length === 0 &&
-                  "btn btn-primary cursor-not-allowed "
-                }`}
-                disabled={selectedSeats.length === 0}
-                onClick={bookNow}
+              <StripeCheckout
+                billingAddress
+                token={onToken}
+                amount={bus.price * selectedSeats.length * 100}
+                currency="MAD"
+                stripeKey="pk_test_ZT7RmqCIjI0PqcpDF9jzOqAS"
               >
-                Book Now
-              </button>
+                <button
+                  className={`btn btn-primary bg-blue-600 hover:bg-blue-800 ${
+                    selectedSeats.length === 0 &&
+                    "btn btn-primary cursor-not-allowed "
+                  }`}
+                  disabled={selectedSeats.length === 0}
+                >
+                  Book Now
+                </button>
+              </StripeCheckout>
             </div>
           </Col>
           <Col lg={12} xs={24} sm={24}>
