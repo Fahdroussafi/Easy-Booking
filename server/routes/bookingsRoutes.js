@@ -7,11 +7,13 @@ const {
   GetAllBookings,
   GetAllBookingsByUser,
   CancelBooking,
+  PayWithStripe,
 } = require("../Controllers/bookingController");
 
 router.post("/book-seat", authMiddleware, BookSeat);
-router.get("/get-all-bookings", authMiddleware, GetAllBookings);
+router.get("/get-all-bookings", GetAllBookings);
 router.get("/:id", authMiddleware, GetAllBookingsByUser);
-router.delete("/:id", authMiddleware, CancelBooking);
+router.delete("/:id", CancelBooking);
+router.post("/make-payment", PayWithStripe);
 
 module.exports = router;
