@@ -30,7 +30,7 @@ function Bus({ bus }) {
           <p className="text-base">{bus.journeyDate}</p>
         </div>
         <h1
-          className="text-lg underline btn btn-primary bg-blue-600 hover:bg-blue-800"
+          className="text-base underline btn btn-sm btn-primary bg-blue-600 hover:bg-blue-800 hover:duration-300"
           onClick={() => {
             navigate(`/book-now/${bus._id}`);
           }}
