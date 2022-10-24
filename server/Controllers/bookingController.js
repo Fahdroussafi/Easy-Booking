@@ -51,9 +51,9 @@ const GetAllBookings = async (req, res) => {
 
 const GetAllBookingsByUser = async (req, res) => {
   try {
-    const bookings = await Booking.find({ user: req.params.userId });
-    populate("bus");
-    populate("user");
+    const bookings = await Booking.find({ user: req.params.user_Id })
+      .populate("bus")
+      .populate("user");
     res.status(200).send({
       message: "Bookings fetched successfully",
       data: bookings,
@@ -61,7 +61,7 @@ const GetAllBookingsByUser = async (req, res) => {
     });
   } catch (error) {
     res.status(500).send({
-      message: "No Bookings Found",
+      message: "Bookings fetch failed",
       data: error,
       success: false,
     });
