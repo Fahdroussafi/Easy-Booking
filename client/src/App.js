@@ -20,7 +20,7 @@ import AdminBookings from "./pages/Admin/AdminBookings";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
-    <div className="App bg-slate-50">
+    <div className="App bg-slate-100">
       {loading && <Loader />}
       <BrowserRouter>
         <Routes>
