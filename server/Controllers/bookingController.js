@@ -1,12 +1,15 @@
 const Booking = require("../models/bookingsModel");
 const Bus = require("../models/busModel");
+const stripe = require("stripe")(process.env.stripe_key);
+const { v4: uuidv4 } = require("uuid");
+const { populate } = require("../models/busModel");
 
+// book seat
 const BookSeat = async (req, res) => {
   try {
     const newBooking = new Booking({
       ...req.body, // spread operator to get all the data from the request body
-      transactionId: "1234",
-      user: req.body.userId,
+      user: req.params.userId,
     });
     await newBooking.save();
     const bus = await Bus.findById(req.body.bus); // get the bus from the request body
@@ -18,6 +21,8 @@ const BookSeat = async (req, res) => {
       success: true,
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).send({
       message: "Booking failed",
       data: error,
@@ -46,7 +51,9 @@ const GetAllBookings = async (req, res) => {
 
 const GetAllBookingsByUser = async (req, res) => {
   try {
-    const bookings = await Booking.find({ user: req.body.userId });
+    const bookings = await Booking.find({ user: req.params.userId });
+    populate("bus");
+    populate("user");
     res.status(200).send({
       message: "Bookings fetched successfully",
       data: bookings,
@@ -82,9 +89,55 @@ const CancelBooking = async (req, res) => {
     });
   }
 };
+
+const PayWithStripe = async (req, res) => {
+  try {
+    const { token, amount } = req.body;
+    const customer = await stripe.customers.create({
+      email: token.email,
+      source: token.id,
+    });
+    const payment = await stripe.charges.create(
+      {
+        amount: amount * 100,
+        currency: "MAD",
+        customer: customer.id,
+        receipt_email: token.email,
+      },
+      {
+        idempotencyKey: uuidv4(),
+      }
+    );
+
+    if (payment) {
+      res.status(200).send({
+        message: "Payment successful",
+        data: {
+          transactionId: payment.source.id,
+        },
+        success: true,
+        amount: payment.amount,
+      });
+    } else {
+      res.status(500).send({
+        message: "Payment failed",
+        data: error,
+        success: false,
+        amount: payment.amount,
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: "Payment failed",
+      data: error,
+      success: false,
+    });
+  }
+};
 module.exports = {
   BookSeat,
   GetAllBookings,
   GetAllBookingsByUser,
   CancelBooking,
+  PayWithStripe,
 };
