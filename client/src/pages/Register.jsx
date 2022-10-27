@@ -11,7 +11,7 @@ function Register() {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/users/register", values);
+      const response = await axios.post("/api/auth/create-user", values);
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);
