@@ -16,7 +16,7 @@ function AdminBuses() {
   const getBuses = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.get("/api/buses/get-all-buses", {});
+      const response = await axiosInstance.post("/api/buses/get-all-buses", {});
       dispatch(HideLoading());
       if (response.data.success) {
         setBuses(response.data.data);
@@ -32,10 +32,7 @@ function AdminBuses() {
   const deleteBus = async (_id) => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.delete(
-        `/api/buses/${_id}`,
-        {}
-      );
+      const response = await axiosInstance.delete(`/api/buses/${_id}`, {});
 
       dispatch(HideLoading());
       if (response.data.success) {
@@ -104,7 +101,7 @@ function AdminBuses() {
 
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex justify-between p-7">
         <PageTitle title="Buses" />
         <button
           className="btn btn-primary bg-blue-600 hover:bg-blue-800"
@@ -113,18 +110,22 @@ function AdminBuses() {
           Add Bus
         </button>
       </div>
-
-      <Table columns={columns} dataSource={buses} />
-      {showBusForm && (
-        <BusForm
-          showBusForm={showBusForm}
-          setShowBusForm={setShowBusForm}
-          type={selectedBus ? "edit" : "add"}
-          selectedBus={selectedBus}
-          setSelectedBus={setSelectedBus}
-          getData={getBuses}
+      <div className="p-7">
+        <Table
+          columns={columns}
+          dataSource={buses}
         />
-      )}
+        {showBusForm && (
+          <BusForm
+            showBusForm={showBusForm}
+            setShowBusForm={setShowBusForm}
+            type={selectedBus ? "edit" : "add"}
+            selectedBus={selectedBus}
+            setSelectedBus={setSelectedBus}
+            getData={getBuses}
+          />
+        )}
+      </div>
     </div>
   );
 }
