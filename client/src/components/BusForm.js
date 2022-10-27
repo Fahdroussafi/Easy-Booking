@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Modal, Row, Form, Col, message } from "antd";
 import { axiosInstance } from "../helpers/axiosInstance";
@@ -13,6 +13,7 @@ function BusForm({
   setSelectedBus,
 }) {
   const dispatch = useDispatch();
+  const [cities, setCities] = useState([]);
 
   const onFinish = async (values) => {
     try {
@@ -41,6 +42,12 @@ function BusForm({
     }
   };
 
+  useEffect(() => {
+    axiosInstance.get("/api/cities/get-all-cities").then((response) => {
+      setCities(response.data.data);
+    });
+  }, []);
+
   return (
     <Modal
       width={800}
@@ -58,7 +65,7 @@ function BusForm({
             <Form.Item label="Bus Name" name="name">
               <input
                 type="text"
-                className="block border border-black w-full p-3 rounded mb-4"
+                className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
               />
             </Form.Item>
           </Col>
@@ -66,64 +73,90 @@ function BusForm({
             <Form.Item label="Bus Number" name="busNumber">
               <input
                 type="text"
-                className="block border border-black w-full p-3 rounded mb-4"
+                className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
               />
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
             <Form.Item label="Capacity" name="capacity">
               <input
-                type="text"
-                className="block border border-black w-full p-3 rounded mb-4"
+                type="number"
+                className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
               />
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
             <Form.Item label="From" name="from">
-              <input
-                type="text"
-                className="block border border-black w-full p-3 rounded mb-4"
-              />
+              <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
+                <option value="">From</option>
+                {cities.map((data, index) => {
+                  return (
+                    <option key={index} value={data.ville}>
+                      {data.ville}
+                    </option>
+                  );
+                })}
+              </select>
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
             <Form.Item label="To" name="to">
-              <input
-                type="text"
-                className="block border border-black w-full p-3 rounded mb-4"
-              />
+              <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
+                <option value="">To</option>
+                {cities.map((data, index) => {
+                  return (
+                    <option key={index} value={data.ville}>
+                      {data.ville}
+                    </option>
+                  );
+                })}
+              </select>
             </Form.Item>
           </Col>
-          <Col lg={12} xs={24}>
+          <Col lg={8} xs={24}>
             <Form.Item label="Journey Date" name="journeyDate">
               <input
+                min={new Date().toISOString().split("T")[0]}
                 type="date"
-                className="block border border-black w-full p-3 rounded mb-4"
+                className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
               />
             </Form.Item>
           </Col>
-          <Col lg={12} xs={24}>
+          <Col lg={8} xs={24}>
             <Form.Item label="Departure" name="departure">
               <input
-                type="text"
-                className="block border border-black w-full p-3 rounded mb-4"
+                type="time"
+                className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
               />
             </Form.Item>
           </Col>
-          <Col lg={12} xs={24}>
+          <Col lg={8} xs={24}>
             <Form.Item label="Arrival" name="arrival">
               <input
-                type="text"
-                className="block border border-black w-full p-3 rounded mb-4"
+                type="time"
+                className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
               />
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
             <Form.Item label="Price" name="price">
               <input
-                type="text"
-                className="block border border-black w-full p-3 rounded mb-4"
+                type="number"
+                className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
               />
+            </Form.Item>
+          </Col>
+          <Col lg={12} xs={24}>
+            <Form.Item label="Status" name="status">
+              <select
+                className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
+                name=""
+                id=""
+              >
+                <option value="Yet to start">Yet To Start</option>
+                <option value="Running">Running</option>
+                <option value="Completed">Completed</option>
+              </select>
             </Form.Item>
           </Col>
         </Row>
