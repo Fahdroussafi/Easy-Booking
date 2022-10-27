@@ -4,39 +4,39 @@ import { useNavigate } from "react-router-dom";
 function Bus({ bus }) {
   const navigate = useNavigate();
   return (
-    <div className="p-3 m-2 rounded-md border-[0.5px] border-black hover:shadow-2xl duration-300">
-      <h1 className="text-xl font-semibold">{bus.name}</h1>
-      <div className="border-[1px] border-black"></div>
+    <div className="p-3 m-2 rounded-md border-[0.5px] border-blue-600 hover:shadow-2xl duration-300">
+      <h1 className="text-xl font-extrabold text-blue-500">{bus.name}</h1>
+      <div className="border-[1px] border-blue-600"></div>
       <div className="flex justify-between p-2">
         <div>
-          <p className="text-base font-semibold">From</p>
+          <p className="text-base font-bold">From</p>
           <p className="text-base">{bus.from}</p>
         </div>
 
         <div>
-          <p className="text-base font-semibold">To</p>
+          <p className="text-base font-bold">To</p>
           <p className="text-base">{bus.to}</p>
         </div>
 
         <div>
-          <p className="text-base font-semibold">Price</p>
+          <p className="text-base font-bold">Price</p>
           <p className="text-base">DH {bus.price} /- </p>
         </div>
       </div>
 
       <div className="flex justify-between items-end">
         <div>
-          <p className="text-base font-semibold">Journey Date</p>
+          <p className="text-base font-bold">Journey Date</p>
           <p className="text-base">{bus.journeyDate}</p>
         </div>
-        <h1
-          className="text-base underline btn btn-sm btn-primary bg-blue-600 hover:bg-blue-800 hover:duration-300"
+        <button
+          className="text-base text-white underline rounded-full px-5 py-2 bg-blue-600 hover:bg-blue-800 hover:duration-300 hover:text-white"
           onClick={() => {
             navigate(`/book-now/${bus._id}`);
           }}
         >
           Book Now
-        </h1>
+        </button>
       </div>
     </div>
   );
