@@ -10,7 +10,7 @@ const {
 const authMiddleware = require("../middlewares/authMiddleware");
 
 router.post("/add-bus", AddBus);
-router.get("/get-all-buses", GetAllBuses);
+router.post("/get-all-buses", GetAllBuses);
 router.put("/:id", UpdateBus);
 router.delete("/:id", DeleteBus);
 router.get("/:id", GetBusById);
