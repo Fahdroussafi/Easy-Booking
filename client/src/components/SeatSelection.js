@@ -13,26 +13,28 @@ function SeatSelection({ selectedSeats, setSelectedSeats, bus }) {
   };
   return (
     <div className="m-5">
-      <div className="w-[300px] border-2 border-black p-[10px]">
+      <div className="w-[300px] border-2 text-xl font-bold border-blue-500 rounded p-[10px]">
         <Row gutter={[10, 10]}>
           {Array.from(Array(capacity).keys()).map((seat, key) => {
-            let seatClass = `cursor-pointer w-[40px] h-[35px] border-2 border-black flex justify-center items-center rounded-full `;
+            let seatClass = `btn btn-circle btn-outline bg-white cursor-pointer hover:bg-blue-600`;
             selectedSeats.includes(seat + 1);
             if (selectedSeats.includes(seat + 1)) {
-              seatClass = `bg-blue-500 cursor-pointer w-[40px] h-[35px] border-2 border-black flex justify-center items-center rounded-full`;
+              seatClass = `btn btn-circle btn-outline bg-blue-500 cursor-pointer `;
             } else if (bus.seatsBooked.includes(seat + 1)) {
-              seatClass = `bg-red-500 pointer-events-none cursor-not-allowed w-[40px] h-[35px] border-2 border-black flex justify-center items-center rounded-full `;
+              seatClass = `btn btn-circle btn-outline bg-red-500 pointer-events-none cursor-not-allowed`;
             }
 
             return (
               <Col key={key} span={6}>
-                <div
-                  className={` border-[1px] text-black p-3 ${seatClass}`}
-                  onClick={() => {
-                    selectOrUnselectSeat(seat + 1);
-                  }}
-                >
-                  {seat + 1}
+                <div className="flex justify-center items-center">
+                  <div
+                    className={`border-[1px] text-black p-3 ${seatClass}`}
+                    onClick={() => {
+                      selectOrUnselectSeat(seat + 1);
+                    }}
+                  >
+                    {seat + 1}
+                  </div>
                 </div>
               </Col>
             );
