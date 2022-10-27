@@ -1,8 +1,10 @@
 const Booking = require("../models/bookingsModel");
 const Bus = require("../models/busModel");
+const User = require("../models/usersModel");
 const stripe = require("stripe")(process.env.stripe_key);
 const { v4: uuidv4 } = require("uuid");
 const { populate } = require("../models/busModel");
+const mongoose = require("mongoose");
 
 // book seat
 const BookSeat = async (req, res) => {
@@ -11,6 +13,8 @@ const BookSeat = async (req, res) => {
       ...req.body, // spread operator to get all the data from the request body
       user: req.params.userId,
     });
+    const user = await User.findById(req.params.userId);
+    // res.json(user._id)
     await newBooking.save();
     const bus = await Bus.findById(req.body.bus); // get the bus from the request body
     bus.seatsBooked = [...bus.seatsBooked, ...req.body.seats]; // add the booked seats to the bus seatsBooked array in the database
@@ -18,6 +22,7 @@ const BookSeat = async (req, res) => {
     res.status(200).send({
       message: "Seat booked successfully",
       data: newBooking,
+      user: user._id,
       success: true,
     });
   } catch (error) {
@@ -35,6 +40,14 @@ const BookSeat = async (req, res) => {
 const GetAllBookings = async (req, res) => {
   try {
     const bookings = await Booking.find();
+    // if a booking is past today date, update the status to Completed
+    bookings.forEach(async (booking) => {
+      const bus = await Bus.findById(booking.bus);
+      if (bus.date < new Date()) {
+        booking.status = "Completed";
+        await booking.save();
+      }
+    });
     res.status(200).send({
       message: "Bookings fetched successfully",
       data: bookings,
@@ -51,9 +64,10 @@ const GetAllBookings = async (req, res) => {
 
 const GetAllBookingsByUser = async (req, res) => {
   try {
-    const bookings = await Booking.find({ user: req.params.user_Id })
-      .populate("bus")
-      .populate("user");
+    const bookings = await Booking.find({ user: req.params.user_Id }).populate([
+      "bus",
+      "user",
+    ]);
     res.status(200).send({
       message: "Bookings fetched successfully",
       data: bookings,
@@ -68,17 +82,28 @@ const GetAllBookingsByUser = async (req, res) => {
   }
 };
 
+// cancel booking by id and remove the seats from the bus seatsBooked array
 const CancelBooking = async (req, res) => {
   try {
-    const booking = await Booking.findById(req.params.id);
-    const bus = await Bus.findById(booking.bus);
+    const booking = await Booking.findById(req.params.booking_id);
+    const user = await User.findById(req.params.user_id);
+    const bus = await Bus.findById(req.params.bus_id);
+    if (!booking || !user || !bus) {
+      res.status(404).send({
+        message: "Booking not found",
+        data: error,
+        success: false,
+      });
+    }
+
+    booking.remove();
     bus.seatsBooked = bus.seatsBooked.filter(
       (seat) => !booking.seats.includes(seat)
     );
     await bus.save();
-    await Booking.findByIdAndDelete(req.params.id);
     res.status(200).send({
       message: "Booking cancelled successfully",
+      data: booking,
       success: true,
     });
   } catch (error) {
