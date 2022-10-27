@@ -13,7 +13,6 @@ import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
 import AdminBuses from "./pages/Admin/AdminBuses";
-import AdminHome from "./pages/Admin/AdminHome";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import AdminBookings from "./pages/Admin/AdminBookings";
 
@@ -78,14 +77,6 @@ function App() {
             }
           />
 
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminHome />
-              </ProtectedRoute>
-            }
-          />
 
           <Route
             path="/admin/buses"
