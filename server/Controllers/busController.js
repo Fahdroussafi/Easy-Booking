@@ -8,8 +8,6 @@ const AddBus = async (req, res) => {
       ? res.send({ message: "Bus already exists", success: false, data: null })
       : await new Bus(req.body).save();
 
-    const newBus = new Bus(req.body);
-    await newBus.save();
     res.status(200).send({
       message: "Bus created successfully",
       success: true,
@@ -22,7 +20,7 @@ const AddBus = async (req, res) => {
 // get all buses
 const GetAllBuses = async (req, res) => {
   try {
-    const buses = await Bus.find();
+    const buses = await Bus.find(req.body);
     return res.status(200).send({
       success: true,
       message: "Buses fetched successfully",
