@@ -7,6 +7,7 @@ import PageTitle from "../components/PageTitle";
 import moment from "moment";
 import { useReactToPrint } from "react-to-print";
 import logo from "../assets/img/logo.png";
+import { Helmet } from "react-helmet";
 
 function Bookings() {
   const [showPrintModal, setShowPrintModal] = useState(false);
@@ -135,70 +136,76 @@ function Bookings() {
   });
 
   return (
-    <div className="p-5">
-      <PageTitle title="Bookings" />
-      <Table columns={columns} dataSource={bookings} />
+    <>
+      <Helmet>
+        <title>Bookings</title>
+      </Helmet>
 
-      {showPrintModal && (
-        <Modal
-          width={1000}
-          height={500}
-          title="Print Ticket"
-          onCancel={() => {
-            setShowPrintModal(false);
-            selectedBooking(null);
-          }}
-          open={showPrintModal}
-          okText="Print"
-          onOk={handlePrint}
-          // onCancel={() => setShowPrintModal(false)}
-        >
-          <div className="p-5" ref={componentRef}>
-            <img src={logo} alt="logo" className="w-20" />
-            <p className="text-lg ">
-              <span className="text-lg font-bold text-blue-500">
-                {selectedBooking?.name}
-              </span>
-            </p>
-            <div className="flex flex-col p-5 text-left">
-              <p className="text-lg">
-                <span className="text-lg font-bold">Full Name:</span>{" "}
-                {selectedBooking?.user}
-              </p>
+      <div className="p-5">
+        <PageTitle title="Bookings" />
+        <Table columns={columns} dataSource={bookings} />
 
-              <p className="text-lg font-bold ">
-                {selectedBooking?.from} - {selectedBooking?.to}
+        {showPrintModal && (
+          <Modal
+            width={1000}
+            height={500}
+            title="Print Ticket"
+            onCancel={() => {
+              setShowPrintModal(false);
+              selectedBooking(null);
+            }}
+            open={showPrintModal}
+            okText="Print"
+            onOk={handlePrint}
+            // onCancel={() => setShowPrintModal(false)}
+          >
+            <div className="p-5" ref={componentRef}>
+              <img src={logo} alt="logo" className="w-20" />
+              <p className="text-lg ">
+                <span className="text-lg font-bold text-blue-500">
+                  {selectedBooking?.name}
+                </span>
               </p>
-              <hr className="border-black" />
-              <p className="text-lg">
-                <span className="text-lg font-bold">Date: </span>
-                {moment(selectedBooking?.journeyDate).format("DD/MM/YYYY")}
-              </p>
-              <p className="text-lg">
-                <span className="text-lg font-bold">Departure Time:</span>{" "}
-                {selectedBooking?.departure}
-              </p>
-              <p className="text-lg">
-                <span className="text-lg font-bold">Arrival Time:</span>{" "}
-                {selectedBooking?.arrival}
-              </p>
+              <div className="flex flex-col p-5 text-left">
+                <p className="text-lg">
+                  <span className="text-lg font-bold">Full Name:</span>{" "}
+                  {selectedBooking?.user}
+                </p>
 
-              <p className="text-lg mt-3">
-                <span className="text-lg font-bold">Seat Numbers:</span>
+                <p className="text-lg font-bold ">
+                  {selectedBooking?.from} - {selectedBooking?.to}
+                </p>
                 <hr className="border-black" />
-                {selectedBooking?.seats.join(", ")}
-              </p>
+                <p className="text-lg">
+                  <span className="text-lg font-bold">Date: </span>
+                  {moment(selectedBooking?.journeyDate).format("DD/MM/YYYY")}
+                </p>
+                <p className="text-lg">
+                  <span className="text-lg font-bold">Departure Time:</span>{" "}
+                  {selectedBooking?.departure}
+                </p>
+                <p className="text-lg">
+                  <span className="text-lg font-bold">Arrival Time:</span>{" "}
+                  {selectedBooking?.arrival}
+                </p>
 
-              <p className="text-lg mt-3">
-                <span className="text-lg font-bold">Amount: </span>
-                <hr className="border-black" />
-                {selectedBooking?.price * selectedBooking?.seats.length} Dh
-              </p>
+                <p className="text-lg mt-3">
+                  <span className="text-lg font-bold">Seat Numbers:</span>
+                  <hr className="border-black" />
+                  {selectedBooking?.seats.join(", ")}
+                </p>
+
+                <p className="text-lg mt-3">
+                  <span className="text-lg font-bold">Amount: </span>
+                  <hr className="border-black" />
+                  {selectedBooking?.price * selectedBooking?.seats.length} Dh
+                </p>
+              </div>
             </div>
-          </div>
-        </Modal>
-      )}
-    </div>
+          </Modal>
+        )}
+      </div>
+    </>
   );
 }
 

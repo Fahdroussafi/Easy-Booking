@@ -1,7 +1,8 @@
 import React from "react";
 
 function Index() {
-  return <div>Index</div>;
+  const title = "Login";
+  return <div></div>;
 }
 
 export default Index;

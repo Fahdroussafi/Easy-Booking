@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import BusForm from "../../components/BusForm";
 import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alertsSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { axiosInstance } from "../../helpers/axiosInstance";
 import { message, Table } from "antd";
+import { Helmet } from "react-helmet";
 
 function AdminUsers() {
   const dispatch = useDispatch();
@@ -43,18 +43,6 @@ function AdminUsers() {
         return new Date(record.createdAt).toLocaleDateString();
       },
     },
-
-    // {
-    //   title: "Action",
-    //   dataIndex: "action",
-    //   render: (actions, record) => (
-    //     <div className="flex gap-3">
-    //       {record?.isBlocked && <p className="underline">UnBlock</p>}
-    //       {!record?.isBlocked && <p className="underline">Block</p>}
-    //       <p className="underline">Delete</p>
-    //     </div>
-    //   ),
-    // },
   ];
 
   useEffect(() => {
@@ -62,18 +50,23 @@ function AdminUsers() {
   }, []);
 
   return (
-    <div>
-      <div className="flex justify-between p-7">
-        <PageTitle title="Users" />
+    <>
+      <Helmet>
+        <title>Users</title>
+      </Helmet>
+      <div>
+        <div className="flex justify-between p-7">
+          <PageTitle title="Users" />
+        </div>
+        <div className="p-7">
+          <Table
+            columns={columns}
+            dataSource={users}
+            pagination={{ pageSize: 5 }}
+          />
+        </div>
       </div>
-      <div className="p-7">
-        <Table
-          columns={columns}
-          dataSource={users}
-          pagination={{ pageSize: 5 }}
-        />
-      </div>
-    </div>
+    </>
   );
 }
 

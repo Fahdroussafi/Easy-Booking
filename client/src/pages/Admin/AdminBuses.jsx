@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BusForm from "../../components/BusForm";
 import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alertsSlice";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { axiosInstance } from "../../helpers/axiosInstance";
 import { message, Table } from "antd";
+import { Helmet } from "react-helmet";
 
 function AdminBuses() {
   const dispatch = useDispatch();
@@ -100,33 +100,35 @@ function AdminBuses() {
   }, []);
 
   return (
-    <div>
-      <div className="flex justify-between p-7">
-        <PageTitle title="Buses" />
-        <button
-          className="btn btn-primary bg-blue-600 hover:bg-blue-800"
-          onClick={() => setShowBusForm(true)}
-        >
-          Add Bus
-        </button>
+    <>
+      <Helmet>
+        <title>Buses</title>
+      </Helmet>
+      <div>
+        <div className="flex justify-between p-7">
+          <PageTitle title="Buses" />
+          <button
+            className="btn btn-primary bg-blue-600 hover:bg-blue-800"
+            onClick={() => setShowBusForm(true)}
+          >
+            Add Bus
+          </button>
+        </div>
+        <div className="p-7">
+          <Table columns={columns} dataSource={buses} />
+          {showBusForm && (
+            <BusForm
+              showBusForm={showBusForm}
+              setShowBusForm={setShowBusForm}
+              type={selectedBus ? "edit" : "add"}
+              selectedBus={selectedBus}
+              setSelectedBus={setSelectedBus}
+              getData={getBuses}
+            />
+          )}
+        </div>
       </div>
-      <div className="p-7">
-        <Table
-          columns={columns}
-          dataSource={buses}
-        />
-        {showBusForm && (
-          <BusForm
-            showBusForm={showBusForm}
-            setShowBusForm={setShowBusForm}
-            type={selectedBus ? "edit" : "add"}
-            selectedBus={selectedBus}
-            setSelectedBus={setSelectedBus}
-            getData={getBuses}
-          />
-        )}
-      </div>
-    </div>
+    </>
   );
 }
 
