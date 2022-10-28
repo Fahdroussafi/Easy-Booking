@@ -21,12 +21,20 @@ const AddBus = async (req, res) => {
 const GetAllBuses = async (req, res) => {
   try {
     const buses = await Bus.find();
-
     buses.forEach(async (bus) => {
-      const journeyDate = new Date(bus.journeyDate);
-      // const departureTime = new Date(bus.departure);
+      const journey = new Date(bus.journeyDate);
+
+      // turn the departure time from time to date
+      const departure = new Date(
+        `${journey.getFullYear()}-${
+          journey.getMonth() + 1
+        }-${journey.getDate()} ${bus.departure}`
+      );
+
+      console.log(journey, "string", departure, "string", bus.departure);
+
       const currentTime = new Date();
-      if (journeyDate < currentTime) {
+      if (journey < currentTime && departure < currentTime) {
         bus.status = "completed";
         await bus.save();
       }
