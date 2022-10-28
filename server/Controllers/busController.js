@@ -17,17 +17,32 @@ const AddBus = async (req, res) => {
   }
 };
 
-// get all buses
+// get all buses and if the journeyDate is passed , delete the bus
 const GetAllBuses = async (req, res) => {
   try {
-    const buses = await Bus.find(req.body);
-    return res.status(200).send({
-      success: true,
+    const buses = await Bus.find();
+
+    buses.forEach(async (bus) => {
+      const journeyDate = new Date(bus.journeyDate);
+      // const departureTime = new Date(bus.departure);
+      const currentTime = new Date();
+      if (journeyDate < currentTime) {
+        bus.status = "completed";
+        await bus.save();
+      }
+    });
+
+    res.status(200).send({
       message: "Buses fetched successfully",
+      success: true,
       data: buses,
     });
   } catch (error) {
-    res.status(500).send({ success: false, message: error.message });
+    res.status(500).send({
+      message: "No Buses Found",
+      success: false,
+      data: error,
+    });
   }
 };
 
