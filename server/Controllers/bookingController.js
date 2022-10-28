@@ -36,18 +36,9 @@ const BookSeat = async (req, res) => {
   }
 };
 
-// get all bookings
 const GetAllBookings = async (req, res) => {
   try {
     const bookings = await Booking.find();
-    // if a booking is past today date, update the status to Completed
-    bookings.forEach(async (booking) => {
-      const bus = await Bus.findById(booking.bus);
-      if (bus.date < new Date()) {
-        booking.status = "Completed";
-        await booking.save();
-      }
-    });
     res.status(200).send({
       message: "Bookings fetched successfully",
       data: bookings,
