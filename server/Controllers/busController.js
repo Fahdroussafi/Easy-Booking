@@ -17,12 +17,13 @@ const AddBus = async (req, res) => {
   }
 };
 
-// get all buses and if the journeyDate is passed , delete the bus
+// get all buses and if the journeyDate is passed 1 hour ago , make the status of the bus to "Completed"
 const GetAllBuses = async (req, res) => {
   try {
     const buses = await Bus.find();
     buses.forEach(async (bus) => {
       const journey = new Date(bus.journeyDate);
+      // const departure = new Date(bus.departure);
 
       // turn the departure time from time to date
       const departure = new Date(
@@ -31,13 +32,10 @@ const GetAllBuses = async (req, res) => {
         }-${journey.getDate()} ${bus.departure}`
       );
 
-      console.log(journey, "string", departure, "string", bus.departure);
-
-      const currentTime = new Date();
-      if (journey < currentTime && departure < currentTime) {
-        bus.status = "completed";
-        await bus.save();
+      if (departure.getTime() - new Date().getTime() < 3600000) {
+        await Bus.findByIdAndUpdate(bus._id, { status: "Completed" });
       }
+      console.log("departure time is : ", departure, "journey date");
     });
 
     res.status(200).send({
