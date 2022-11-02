@@ -62,7 +62,19 @@ function BusForm({
       <Form layout="vertical" onFinish={onFinish} initialValues={selectedBus}>
         <Row gutter={[10, 10]}>
           <Col lg={24} xs={24}>
-            <Form.Item label="Bus Name" name="name">
+            <Form.Item
+              label="Bus Name"
+              name="name"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message:
+                    type === "add"
+                      ? "Please enter bus name"
+                      : "Please enter bus name",
+                },
+              ]}
+            >
               <input
                 type="text"
                 className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
@@ -70,7 +82,16 @@ function BusForm({
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
-            <Form.Item label="Bus Number" name="busNumber">
+            <Form.Item
+              label="Bus Number"
+              name="busNumber"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please input bus number!",
+                },
+              ]}
+            >
               <input
                 type="text"
                 className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
@@ -78,7 +99,16 @@ function BusForm({
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
-            <Form.Item label="Capacity" name="capacity">
+            <Form.Item
+              label="Capacity"
+              name="capacity"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please input bus capacity!",
+                },
+              ]}
+            >
               <input
                 type="number"
                 className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
@@ -86,7 +116,17 @@ function BusForm({
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
-            <Form.Item label="From" name="from">
+            <Form.Item
+              label="From"
+              name="from"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please Choose an option",
+                  validateTrigger: "onSubmit",
+                },
+              ]}
+            >
               <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
                 <option value="">From</option>
                 {cities.map((data, index) => {
@@ -100,7 +140,17 @@ function BusForm({
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
-            <Form.Item label="To" name="to">
+            <Form.Item
+              label="To"
+              name="to"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please Choose an option",
+                  validateTrigger: "onSubmit",
+                },
+              ]}
+            >
               <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
                 <option value="">To</option>
                 {cities.map((data, index) => {
@@ -114,7 +164,17 @@ function BusForm({
             </Form.Item>
           </Col>
           <Col lg={8} xs={24}>
-            <Form.Item label="Journey Date" name="journeyDate">
+            <Form.Item
+              label="Journey Date"
+              name="journeyDate"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please input journey date!",
+                  validateTrigger: "onSubmit",
+                },
+              ]}
+            >
               <input
                 min={new Date().toISOString().split("T")[0]}
                 type="date"
@@ -123,7 +183,17 @@ function BusForm({
             </Form.Item>
           </Col>
           <Col lg={8} xs={24}>
-            <Form.Item label="Departure" name="departure">
+            <Form.Item
+              label="Departure"
+              name="departure"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please input departure time!",
+                  validateTrigger: "onSubmit",
+                },
+              ]}
+            >
               <input
                 type="time"
                 className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
@@ -131,7 +201,17 @@ function BusForm({
             </Form.Item>
           </Col>
           <Col lg={8} xs={24}>
-            <Form.Item label="Arrival" name="arrival">
+            <Form.Item
+              label="Arrival"
+              name="arrival"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please input arrival time!",
+                  validateTrigger: "onSubmit",
+                },
+              ]}
+            >
               <input
                 type="time"
                 className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
@@ -139,7 +219,16 @@ function BusForm({
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
-            <Form.Item label="Price" name="price">
+            <Form.Item
+              label="Price"
+              name="price"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please input price!",
+                },
+              ]}
+            >
               <input
                 type="number"
                 className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
@@ -147,7 +236,17 @@ function BusForm({
             </Form.Item>
           </Col>
           <Col lg={12} xs={24}>
-            <Form.Item label="Status" name="status">
+            <Form.Item
+              label="Status"
+              name="status"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please Choose an option",
+                  validateTrigger: "onSubmit",
+                },
+              ]}
+            >
               <select
                 className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
                 name=""
