@@ -115,7 +115,12 @@ function AdminBuses() {
           </button>
         </div>
         <div className="p-7">
-          <Table columns={columns} dataSource={buses} />
+          <Table
+            columns={columns}
+            dataSource={buses}
+            pagination={{ pageSize: 7 }}
+          />
+          {/* <Table columns={columns} dataSource={buses} /> */}
           {showBusForm && (
             <BusForm
               showBusForm={showBusForm}
