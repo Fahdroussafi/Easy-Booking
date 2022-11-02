@@ -35,16 +35,14 @@ function Register() {
           className="bg-white min-h-screen flex flex-col"
           style={{
             backgroundSize: "cover",
-            backgroundImage: `url("https://wallpapercave.com/wp/wp2120656.jpg")`,
+            backgroundImage: `url("https://wallpapercave.com/wp/wp6913872.jpg")`,
             backgroundPosition: "center center",
             backgroundRepeat: "no-repeat",
           }}
         >
           <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
             <div className="bg-gray-50 bg-opacity-80 px-6 py-8 rounded-xl shadow-xl text-black w-full border-2">
-              <h1 className="mb-8 text-3xl text-center font-bold hover:animate-bounce">
-                Sign up
-              </h1>
+              <h1 className="mb-8 text-3xl text-center font-bold ">REGISTER</h1>
               <Form.Item
                 name="name"
                 initialValue=""
@@ -106,7 +104,7 @@ function Register() {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className=" bg-black rounded-2xl font-bold w-56 text-center py-3 text-white hover:text-black hover:bg-white hover:bg-white-500 hover:border-black hover:border duration-500 focus:outline-none my-1"
+                  className=" bg-blue-600 rounded-2xl font-bold w-56 text-center py-3 text-white hover:text-black hover:bg-white hover:bg-white-500 hover:border-black hover:border duration-500 focus:outline-none my-1"
                 >
                   Create Account
                 </button>
