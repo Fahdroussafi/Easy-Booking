@@ -242,7 +242,6 @@ function BusForm({
               rules={[
                 {
                   required: type === "add" ? true : true,
-                  message: "Please Choose an option",
                   validateTrigger: "onSubmit",
                 },
               ]}
@@ -254,7 +253,9 @@ function BusForm({
               >
                 <option value="Yet to start">Yet To Start</option>
                 <option value="Running">Running</option>
-                <option value="Completed">Completed</option>
+                <option disabled value="Completed">
+                  Completed
+                </option>
               </select>
             </Form.Item>
           </Col>
