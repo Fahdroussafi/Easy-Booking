@@ -7,6 +7,7 @@ function DefaultLayout({ children }) {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = React.useState(false);
   const { user } = useSelector((state) => state.users);
+
   const userMenu = [
     {
       name: "Home",
@@ -100,9 +101,8 @@ function DefaultLayout({ children }) {
                   <span
                     onClick={() => {
                       if (item.path === "/logout") {
-                        localStorage.removeItem("token");
-                        localStorage.removeItem("user_id");
-                        navigate("/login");
+                        localStorage.clear();
+                        navigate("/");
                       } else {
                         navigate(item.path);
                       }
