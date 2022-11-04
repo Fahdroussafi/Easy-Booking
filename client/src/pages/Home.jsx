@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import Bus from "../components/Bus";
-import { Row, Col, message } from "antd";
+import { Row, Col, message, Modal } from "antd";
 import { Helmet } from "react-helmet";
 
 function Home() {
@@ -11,21 +11,33 @@ function Home() {
   const [buses, setBuses] = useState([]);
   const [cities, setCities] = useState([]);
   const { user } = useSelector((state) => state.users);
-  const [filters = {}, setFilters] = useState({});
+  const [filters, setFilters] = useState({});
+
+  const getBusesByFilter = async () => {
+    dispatch(ShowLoading());
+    const from = filters.from;
+    const to = filters.to;
+    const journeyDate = filters.journeyDate;
+    try {
+      const { data } = await axiosInstance.post(
+        `/api/buses/get?from=${from}&to=${to}&journeyDate=${journeyDate}`
+      );
+      // localStorage.setItem("bus_id", JSON.stringify(data.data));
+
+      // const searchResult = JSON.parse(localStorage.getItem("bus_id"));
+
+      setBuses(data.data);
+      dispatch(HideLoading());
+    } catch (error) {
+      dispatch(HideLoading());
+      message.error(error.response.data.message);
+    }
+  };
 
   const getBuses = async () => {
-    const tempFilters = {};
-    Object.keys(filters).forEach((key) => {
-      if (filters[key]) {
-        tempFilters[key] = filters[key];
-      }
-    });
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.post(
-        "/api/buses/get-all-buses",
-        tempFilters
-      );
+      const response = await axiosInstance.post("/api/buses/get-all-buses");
 
       dispatch(HideLoading());
       if (response.data.success) {
@@ -46,7 +58,13 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    getBuses();
+    if (filters.from && filters.to && filters.journeyDate) getBuses();
+  }, []);
+
+  useEffect(() => {
+    if (filters.from && filters.to && filters.journeyDate) {
+      getBusesByFilter();
+    }
   }, []);
 
   return (
@@ -97,17 +115,18 @@ function Home() {
                 min={new Date().toISOString().split("T")[0]}
                 type="date"
                 placeholder="Date"
-                value={filters.journeyDate}
-                onChange={(e) =>
-                  setFilters({ ...filters, journeyDate: e.target.value })
-                }
+                onChange={(e) => {
+                  setFilters({ ...filters, journeyDate: e.target.value });
+                }}
               />
             </Col>
             <Col lg={8} sm={24}>
               <div className="flex justify-center gap-4">
                 <button
                   className="py-3 px-10 rounded-full bg-blue-600 hover:bg-blue-800 hover:duration-300 hover:shadow-xl text-white"
-                  onClick={() => getBuses()}
+                  onClick={() => {
+                    getBusesByFilter();
+                  }}
                 >
                   Search
                 </button>
@@ -118,20 +137,31 @@ function Home() {
         <div className="z-20">
           <Row gutter={[15, 15]}>
             {buses
-              .filter((bus) => bus.status === "Yet to start")
-              .map((bus, key) => (
-                <Col key={key} lg={12} xs={24} sm={24}>
-                  <Bus bus={bus} />
-
-                  {buses.length === 0 && (
-                    <div className="flex justify-center">
-                      <h1 className="text-2xl font-bold text-gray-500">
-                        No Buses Found
-                      </h1>
-                    </div>
-                  )}
-                </Col>
-              ))}
+              .filter((bus) => {
+                if (!filters.from && !filters.to && !filters.journeyDate) {
+                  return (
+                    bus.from === filters.from &&
+                    bus.to === filters.to &&
+                    bus.journeyDate === filters.journeyDate
+                  );
+                } else {
+                  return bus;
+                }
+              })
+              .map((bus, index) => {
+                return (
+                  <Col key={index} lg={24} sm={24}>
+                    <Bus bus={bus} />
+                  </Col>
+                );
+              })}
+            {buses.length === 0 && (
+              <div className="flex justify-center w-full">
+                <h1 className="text-2xl font-bold text-gray-500">
+                  No buses found
+                </h1>
+              </div>
+            )}
           </Row>
         </div>
       </div>
