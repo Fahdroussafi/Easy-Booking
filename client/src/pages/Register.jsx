@@ -31,18 +31,23 @@ function Register() {
         <title>Register</title>
       </Helmet>
       <Form onFinish={onFinish}>
-        <div
-          className="bg-white min-h-screen flex flex-col"
-          style={{
-            backgroundSize: "cover",
-            backgroundImage: `url("https://wallpapercave.com/wp/wp6913872.jpg")`,
-            backgroundPosition: "center center",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-            <div className="bg-gray-50 bg-opacity-80 px-6 py-8 rounded-xl shadow-xl text-black w-full border-2">
-              <h1 className="mb-8 text-3xl text-center font-bold ">REGISTER</h1>
+        <div className="h-screen flex">
+          <div
+            className="hidden lg:flex w-full lg:w-3/4"
+            style={{
+              backgroundSize: "cover",
+              backgroundImage: `url("https://wallpapercave.com/wp/wp6913872.jpg")`,
+              backgroundPosition: "center center",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <div class="flex items-center h-full w-full px-20 bg-gray-900 bg-opacity-40"></div>
+          </div>
+          <div className="from-gray-50 to-blue-500 bg-gradient-to-r flex w-full lg:w-1/2 justify-center items-center space-y-8">
+            <div className="w-3/4 px-8 md:px-32 lg:px-24">
+              <h1 className="mb-8 text-5xl text-center font-bold italic">
+                Register
+              </h1>
               <Form.Item
                 name="name"
                 initialValue=""
@@ -57,7 +62,7 @@ function Register() {
               >
                 <input
                   type="text"
-                  className="block border border-black w-full p-3 rounded mb-4"
+                  className="block border-2 border-blue-700 w-full p-3 px-5 rounded-full mb-4"
                   placeholder="Fullname"
                 />
               </Form.Item>
@@ -75,7 +80,7 @@ function Register() {
               >
                 <input
                   type="email"
-                  className="block border border-black w-full p-3 rounded mb-4"
+                  className="block border-2 border-blue-700 w-full p-3 px-5 rounded-full mb-4"
                   placeholder="Email"
                 />
               </Form.Item>
@@ -96,7 +101,7 @@ function Register() {
               >
                 <input
                   type="password"
-                  className="block border border-black w-full p-3 rounded mb-4"
+                  className="block border-2 border-blue-700 w-full p-3 px-5 rounded-full mb-4"
                   placeholder="Password"
                   autoComplete="off"
                 />
@@ -104,18 +109,14 @@ function Register() {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className=" bg-blue-600 rounded-2xl font-bold w-56 text-center py-3 text-white hover:text-black hover:bg-white hover:bg-white-500 hover:border-black hover:border duration-500 focus:outline-none my-1"
+                  className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"
                 >
                   Create Account
                 </button>
               </div>
               <p className="text-center text-base text-gray-600 mt-4">
                 Already have an account?
-                <a
-                  className="no-underline border-b border-gray-500 text-gray-500"
-                  href="/login"
-                >
-                  {" "}
+                <a className="btn btn-link text-blue-600" href="/login">
                   Login
                 </a>
               </p>
