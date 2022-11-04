@@ -32,7 +32,15 @@ function Bus({ bus }) {
         <button
           className="text-base text-white underline rounded-full px-5 py-2 bg-blue-600 hover:bg-blue-800 hover:duration-300 hover:text-white"
           onClick={() => {
-            navigate(`/book-now/${bus._id}`);
+            if (localStorage.getItem("user_id")) {
+              navigate(`/book-now/${bus._id}`);
+            }else{
+              navigate(`/login`);
+            }
+            // clear local storage
+            localStorage.removeItem("idTrip");
+            // set id trip local storage
+            localStorage.setItem("idTrip", bus._id);
           }}
         >
           Book Now
