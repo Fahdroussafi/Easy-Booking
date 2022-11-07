@@ -23,9 +23,7 @@ const GetAllBuses = async (req, res) => {
     const buses = await Bus.find();
     buses.forEach(async (bus) => {
       const journey = new Date(bus.journeyDate);
-      // const departure = new Date(bus.departure);
 
-      // turn the departure time from time to date
       const departure = new Date(
         `${journey.getFullYear()}-${
           journey.getMonth() + 1
@@ -35,7 +33,7 @@ const GetAllBuses = async (req, res) => {
       if (departure.getTime() - new Date().getTime() < 3600000) {
         await Bus.findByIdAndUpdate(bus._id, { status: "Completed" });
       }
-      // console.log("departure time is : ", departure, "journey date");
+      // console.log("departure time is : ", departure);
     });
 
     res.status(200).send({
@@ -60,13 +58,16 @@ const GetBusesByFromAndTo = async (req, res) => {
       to: req.query.to,
       journeyDate: req.query.journeyDate,
     });
-    res.status(200).json({
+    const filteredBuses = buses.filter(
+      (bus) => bus.status !== "Completed" && bus.status !== "Running"
+    );
+    res.status(200).send({
       message: "Buses fetched successfully",
       success: true,
-      data: buses,
+      data: filteredBuses,
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(500).send({
       message: "No Buses Found",
       success: false,
       data: error,
