@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Bus({ bus }) {
   const navigate = useNavigate();
   return (
-    <div className="p-3 m-2 rounded-md border-[0.5px] border-blue-600 hover:shadow-2xl duration-300">
+    <div className="bg-gray-900 text-white p-3 m-2 rounded-md border-[0.5px] border-blue-600 hover:shadow-2xl duration-300">
       <h1 className="text-xl font-extrabold text-blue-500">{bus.name}</h1>
       <div className="border-[1px] border-blue-600"></div>
       <div className="flex justify-between p-2">
@@ -34,7 +34,7 @@ function Bus({ bus }) {
           onClick={() => {
             if (localStorage.getItem("user_id")) {
               navigate(`/book-now/${bus._id}`);
-            }else{
+            } else {
               navigate(`/login`);
             }
             // clear local storage
