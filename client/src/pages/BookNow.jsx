@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
@@ -15,7 +15,7 @@ function BookNow() {
   const dispatch = useDispatch();
   const [bus, setBus] = useState(null);
 
-  const getBus = async () => {
+  const getBus = useCallback(async () => {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.get(`/api/buses/${params.id}`);
@@ -29,7 +29,7 @@ function BookNow() {
       dispatch(HideLoading());
       message.error(error.message);
     }
-  };
+  }, [dispatch, params.id]);
 
   const bookNow = async (transactionId) => {
     try {
@@ -78,7 +78,7 @@ function BookNow() {
 
   useEffect(() => {
     getBus();
-  }, []);
+  }, [getBus]);
   return (
     <>
       <Helmet>
