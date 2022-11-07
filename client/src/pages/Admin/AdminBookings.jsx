@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from "../../helpers/axiosInstance";
 import { message, Table, Modal } from "antd";
@@ -15,7 +15,7 @@ function AdminBookings() {
   const [bookings, setBookings] = useState([]);
   const dispatch = useDispatch();
 
-  const getBookings = async () => {
+  const getBookings = useCallback(async () => {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.get(
@@ -41,7 +41,7 @@ function AdminBookings() {
       dispatch(HideLoading());
       message.error(error.message);
     }
-  };
+  }, [dispatch]);
 
   const CancelBooking = async () => {
     try {
@@ -129,7 +129,7 @@ function AdminBookings() {
 
   useEffect(() => {
     getBookings();
-  }, []);
+  }, [getBookings]);
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({

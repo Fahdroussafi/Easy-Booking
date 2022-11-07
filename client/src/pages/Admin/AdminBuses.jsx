@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import BusForm from "../../components/BusForm";
 import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alertsSlice";
@@ -13,7 +13,7 @@ function AdminBuses() {
   const [buses, setBuses] = useState([]);
   const [selectedBus, setSelectedBus] = useState(null);
 
-  const getBuses = async () => {
+  const getBuses = useCallback(async () => {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.post("/api/buses/get-all-buses", {});
@@ -27,7 +27,7 @@ function AdminBuses() {
       dispatch(HideLoading());
       message.error(error.message);
     }
-  };
+  }, [dispatch]);
 
   const deleteBus = async (_id) => {
     try {
@@ -97,7 +97,7 @@ function AdminBuses() {
 
   useEffect(() => {
     getBuses();
-  }, []);
+  }, [getBuses]);
 
   return (
     <>
@@ -120,7 +120,6 @@ function AdminBuses() {
             dataSource={buses}
             pagination={{ pageSize: 7 }}
           />
-          {/* <Table columns={columns} dataSource={buses} /> */}
           {showBusForm && (
             <BusForm
               showBusForm={showBusForm}

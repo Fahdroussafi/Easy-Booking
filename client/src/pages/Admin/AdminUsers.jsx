@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alertsSlice";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ function AdminUsers() {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
 
-  const getUsers = async () => {
+  const getUsers = useCallback( async () => {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.get("/api/users/get-all-users", {});
@@ -25,7 +25,7 @@ function AdminUsers() {
       dispatch(HideLoading());
       message.error(error.message);
     }
-  };
+  }, [dispatch]);
 
   const columns = [
     {
@@ -47,7 +47,7 @@ function AdminUsers() {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [getUsers]);
 
   return (
     <>

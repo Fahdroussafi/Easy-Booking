@@ -7,7 +7,7 @@ function PublicRoute({ children }) {
     if (localStorage.getItem("token")) {
       navigate("/easy-booking");
     }
-  }, []);
+  }, [navigate]);
   return <div>{children}</div>;
 }
 

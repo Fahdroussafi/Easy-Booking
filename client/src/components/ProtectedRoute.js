@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
@@ -12,7 +12,7 @@ function ProtectedRoute({ children }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.users);
   const navigate = useNavigate();
-  const validateToken = async () => {
+  const validateToken = useCallback(async () => {
     try {
       dispatch(ShowLoading());
 
@@ -41,7 +41,7 @@ function ProtectedRoute({ children }) {
       dispatch(HideLoading());
       navigate("/login");
     }
-  };
+  }, [dispatch, navigate, user_id]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -49,7 +49,7 @@ function ProtectedRoute({ children }) {
     } else {
       navigate("/login");
     }
-  }, []);
+  }, [navigate, validateToken]);
 
   return <div>{user && <DefaultLayout>{children}</DefaultLayout>}</div>;
 }
