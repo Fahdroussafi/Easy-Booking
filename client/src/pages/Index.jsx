@@ -1,4 +1,3 @@
-import "../assets/style/index.css";
 import logo from "../assets/img/logo.png";
 import { Helmet } from "react-helmet";
 import React, { useState, useEffect, useCallback } from "react";
@@ -7,12 +6,12 @@ import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import Bus from "../components/Bus";
 import { Row, Col, message } from "antd";
+import { Link } from "react-router-dom";
 
 function Index() {
   const dispatch = useDispatch();
   const [buses, setBuses] = useState([]);
   const [cities, setCities] = useState([]);
-  // const { user } = useSelector((state) => state.users);
   const [filters, setFilters] = useState({});
 
   const getBusesByFilter = useCallback(async () => {
@@ -106,7 +105,7 @@ function Index() {
                     })
                     .map((bus, index) => {
                       return (
-                        <Col key={index} lg={8} sm={24}>
+                        <Col key={index} lg={24} sm={24}>
                           <Bus bus={bus} />
                         </Col>
                       );
@@ -134,10 +133,14 @@ function Index() {
               is a platform that allows you to book your bus tickets online and
               in a very easy way.
             </p>
-            <button className="block w-full bg-blue-600 mt-4 py-2 rounded-2xl hover:bg-blue-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">
+            <Link
+              to="/login"
+              className="block w-full bg-blue-600 mt-4 py-2 rounded-2xl
+              hover:bg-blue-700 hover:-translate-y-1 transition-all duration-500
+              text-white font-semibold mb-2"
+            >
               Check your bookings now
-            </button>
-
+            </Link>
             <div className="w-full my-5 mx-2 p-2 px-2 py-3 flex justify-center">
               <Row gutter={10} align="center">
                 <Col lg={12} sm={24}>
