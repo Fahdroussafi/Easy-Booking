@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Form, message } from "antd";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../redux/alertsSlice";
 import { Helmet } from "react-helmet";
 
 function Login() {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onFinish = async (values) => {
@@ -20,7 +21,6 @@ function Login() {
         localStorage.setItem("user_id", response.data.user._id);
 
         const idTrip = localStorage.getItem("idTrip");
-        const idUser = localStorage.getItem("user_id");
 
         if (response.data.user.isAdmin === true) {
           navigate("/admin/buses");
@@ -29,7 +29,6 @@ function Login() {
         } else if (idTrip !== null) {
           navigate(`/book-now/${idTrip}`);
         }
-
       } else {
         message.error(response.data.message);
       }
@@ -106,10 +105,13 @@ function Login() {
               </button>
             </div>
             <p className="text-center text-base text-gray-600">
-              Don't have an account?
-              <a className="btn btn-link text-blue-600" href="/register">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-blue-600 hover:text-blue-700"
+              >
                 Register
-              </a>
+              </Link>
             </p>
           </div>
         </div>

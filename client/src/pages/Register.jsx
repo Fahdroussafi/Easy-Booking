@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Form, message } from "antd";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -41,7 +41,7 @@ function Register() {
               backgroundRepeat: "no-repeat",
             }}
           >
-            <div class="flex items-center h-full w-full px-20 bg-gray-900 bg-opacity-40"></div>
+            <div className="flex items-center h-full w-full px-20 bg-gray-900 bg-opacity-40"></div>
           </div>
           <div className="from-gray-50 to-blue-500 bg-gradient-to-r flex w-full lg:w-1/2 justify-center items-center space-y-8">
             <div className="w-3/4 px-8 md:px-32 lg:px-24">
@@ -115,10 +115,10 @@ function Register() {
                 </button>
               </div>
               <p className="text-center text-base text-gray-600 mt-4">
-                Already have an account?
-                <a className="btn btn-link text-blue-600" href="/login">
+                Already have an account?{" "}
+                <Link to="/login" className="text-blue-600 hover:text-blue-700">
                   Login
-                </a>
+                </Link>
               </p>
             </div>
           </div>
