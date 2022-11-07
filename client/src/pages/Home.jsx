@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import Bus from "../components/Bus";
-import { Row, Col, message, Modal } from "antd";
+import { Row, Col, message } from "antd";
 import { Helmet } from "react-helmet";
 
 function Home() {
   const dispatch = useDispatch();
   const [buses, setBuses] = useState([]);
   const [cities, setCities] = useState([]);
-  const { user } = useSelector((state) => state.users);
   const [filters, setFilters] = useState({});
 
-  const getBusesByFilter = async () => {
+  const getBusesByFilter = useCallback(async () => {
     dispatch(ShowLoading());
     const from = filters.from;
     const to = filters.to;
@@ -22,19 +21,15 @@ function Home() {
       const { data } = await axiosInstance.post(
         `/api/buses/get?from=${from}&to=${to}&journeyDate=${journeyDate}`
       );
-      // localStorage.setItem("bus_id", JSON.stringify(data.data));
-
-      // const searchResult = JSON.parse(localStorage.getItem("bus_id"));
-
       setBuses(data.data);
       dispatch(HideLoading());
     } catch (error) {
       dispatch(HideLoading());
       message.error(error.response.data.message);
     }
-  };
+  }, [filters, dispatch]);
 
-  const getBuses = async () => {
+  const getBuses = useCallback(async () => {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.post("/api/buses/get-all-buses");
@@ -49,7 +44,7 @@ function Home() {
       dispatch(HideLoading());
       message.error(error.message);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     axiosInstance.get("/api/cities/get-all-cities").then((response) => {
@@ -57,15 +52,15 @@ function Home() {
     });
   }, []);
 
-  useEffect(() => {
+  useCallback(() => {
     if (filters.from && filters.to && filters.journeyDate) getBuses();
-  }, []);
+  }, [filters, getBuses]);
 
-  useEffect(() => {
+  useCallback(() => {
     if (filters.from && filters.to && filters.journeyDate) {
       getBusesByFilter();
     }
-  }, []);
+  }, [filters, getBusesByFilter]);
 
   return (
     <>
