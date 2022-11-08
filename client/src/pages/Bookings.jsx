@@ -93,6 +93,7 @@ function Bookings() {
     {
       title: "Journey Time",
       dataIndex: "departure",
+      render: (departure) => moment(departure, "HH:mm").format("hh:mm A"),
     },
     {
       title: "Seats",
@@ -157,7 +158,6 @@ function Bookings() {
             open={showPrintModal}
             okText="Print"
             onOk={handlePrint}
-            // onCancel={() => setShowPrintModal(false)}
           >
             <div className="p-5" ref={componentRef}>
               <img src={logo} alt="logo" className="w-20" />
