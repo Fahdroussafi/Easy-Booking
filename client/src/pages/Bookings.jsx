@@ -8,6 +8,7 @@ import moment from "moment";
 import { useReactToPrint } from "react-to-print";
 import logo from "../assets/img/logo.png";
 import { Helmet } from "react-helmet";
+import QRCode from "react-qr-code";
 
 function Bookings() {
   const [showPrintModal, setShowPrintModal] = useState(false);
@@ -106,7 +107,7 @@ function Bookings() {
       render: (text, record) => (
         <div className="flex gap-2">
           <button
-            className="underline text-base text-gray-700 cursor-pointer hover:text-black duration-300"
+            className="underline text-base text-green-500 cursor-pointer hover:text-green-700"
             onClick={() => {
               setSelectedBooking(record);
               setShowPrintModal(true);
@@ -115,7 +116,7 @@ function Bookings() {
             View
           </button>
           <button
-            className="underline text-base text-gray-700 cursor-pointer hover:text-black duration-300"
+            className="underline text-base text-red-500 cursor-pointer hover:text-red-700"
             onClick={() => {
               CancelBooking();
             }}
@@ -159,47 +160,107 @@ function Bookings() {
             okText="Print"
             onOk={handlePrint}
           >
-            <div className="p-5" ref={componentRef}>
-              <img src={logo} alt="logo" className="w-20" />
-              <p className="text-lg ">
-                <span className="text-lg font-bold text-blue-500">
-                  {selectedBooking?.name}
-                </span>
-              </p>
-              <div className="flex flex-col p-5 text-left">
-                <p className="text-lg">
-                  <span className="text-lg font-bold">Full Name:</span>{" "}
-                  {selectedBooking?.user}
-                </p>
+            <div
+              className="flex flex-col items-center justify-center bg-center bg-cover"
+              ref={componentRef}
+            >
+              <div className="absolute bg-white opacity-80 inset-0 z-0"></div>
+              <div className="max-w-md w-full h-full mx-auto z-10 bg-blue-900 rounded-3xl">
+                <div className="flex flex-col">
+                  <div className="bg-white relative drop-shadow-2xl  rounded-3xl p-4 m-4">
+                    <div className="flex-none sm:flex">
+                      <div className="flex-auto justify-evenly">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center my-1">
+                            <span className="mr-3 rounded-full bg-white w-8 h-8">
+                              <img alt="logo" src={logo} className="h-8 p-1" />
+                            </span>
+                            <h2 className="font-medium">
+                              {selectedBooking?.name}
+                            </h2>
+                          </div>
+                          <div className="ml-auto font-bold text-blue-600">
+                            {selectedBooking?.user}
+                          </div>
+                        </div>
+                        <div className="border-dashed border-b-2 my-5"></div>
+                        <div className="flex items-center">
+                          <div className="flex flex-col">
+                            <div className="flex-auto text-xs text-gray-400 my-1"></div>
+                            <div className="w-full flex-none text-lg text-blue-800 font-bold leading-none">
+                              From
+                            </div>
+                            <div className="text-xs">
+                              {selectedBooking?.from}
+                            </div>
+                          </div>
+                          <div className="flex flex-col mx-auto">
+                            <img src={logo} alt="logo" className="w-20 p-1" />
+                          </div>
+                          <div className="flex flex-col ">
+                            <div className="flex-auto text-xs text-gray-400 my-1"></div>
+                            <div className="w-full flex-none text-lg text-blue-800 font-bold leading-none">
+                              To
+                            </div>
+                            <div className="text-xs">{selectedBooking?.to}</div>
+                          </div>
+                        </div>
+                        <div className="border-dashed border-b-2 my-5 pt-5">
+                          <div className="absolute rounded-full w-5 h-5 bg-blue-900 -mt-2 -left-2"></div>
+                          <div className="absolute rounded-full w-5 h-5 bg-blue-900 -mt-2 -right-2"></div>
+                        </div>
 
-                <p className="text-lg font-bold ">
-                  {selectedBooking?.from} - {selectedBooking?.to}
-                </p>
-                <hr className="border-black" />
-                <p className="text-lg">
-                  <span className="text-lg font-bold">Date: </span>
-                  {moment(selectedBooking?.journeyDate).format("DD/MM/YYYY")}
-                </p>
-                <p className="text-lg">
-                  <span className="text-lg font-bold">Departure Time:</span>{" "}
-                  {selectedBooking?.departure}
-                </p>
-                <p className="text-lg">
-                  <span className="text-lg font-bold">Arrival Time:</span>{" "}
-                  {selectedBooking?.arrival}
-                </p>
+                        <div className="flex items-center mb-4 px-5">
+                          <div className="flex flex-col text-sm">
+                            <span className="">Depart Time</span>
+                            <div className="font-semibold">
+                              {moment(
+                                selectedBooking?.departure,
+                                "HH:mm"
+                              ).format("hh:mm A")}
+                            </div>
+                          </div>
+                          <div className="flex flex-col mx-auto text-sm"></div>
+                          <div className="flex flex-col text-sm">
+                            <span className="">Arrival Time</span>
+                            <div className="font-semibold">
+                              {moment(selectedBooking?.arrival, "HH:mm").format(
+                                "hh:mm A"
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="border-dashed border-b-2 my-5 pt-5">
+                          <div className="absolute rounded-full w-5 h-5 bg-blue-900 -mt-2 -left-2"></div>
+                          <div className="absolute rounded-full w-5 h-5 bg-blue-900 -mt-2 -right-2"></div>
+                        </div>
+                        <div className="flex items-center px-5 pt-3 text-sm">
+                          <div className="flex flex-col">
+                            <span className="">Price</span>
+                            <div className="font-semibold">
+                              {selectedBooking?.price *
+                                selectedBooking?.seats.length}{" "}
+                              Dh
+                            </div>
+                          </div>
+                          <div className="flex flex-col mx-auto">
+                            <QRCode value={selectedBooking?._id} size={150} />
+                          </div>
 
-                <p className="text-lg mt-3">
-                  <span className="text-lg font-bold">Seat Numbers:</span>
-                  <hr className="border-black" />
-                  {selectedBooking?.seats.join(", ")}
-                </p>
-
-                <p className="text-lg mt-3">
-                  <span className="text-lg font-bold">Amount: </span>
-                  <hr className="border-black" />
-                  {selectedBooking?.price * selectedBooking?.seats.length} Dh
-                </p>
+                          <div className="flex flex-col">
+                            <span className="">Seats</span>
+                            <div className="font-semibold">
+                              {selectedBooking?.seats.join(", ")}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex flex-col py-5  justify-center text-sm ">
+                          <div className="barcode h-14 w-0 inline-block mt-4 relative left-auto"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </Modal>
