@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import SeatSelection from "../components/SeatSelection";
 import StripeCheckout from "react-stripe-checkout";
 import { Helmet } from "react-helmet";
+import moment from "moment";
 
 function BookNow() {
   const navigate = useNavigate();
@@ -108,11 +109,11 @@ function BookNow() {
                 </h1>
                 <h1 className="text-lg">
                   <b className="text-blue-600 italic">Departure Time</b> :{" "}
-                  {bus.departure}
+                  {moment(bus.departure, "HH:mm").format("hh:mm A")}
                 </h1>
                 <h1 className="text-lg">
                   <b className="text-blue-600 italic">Arrival Time</b> :{" "}
-                  {bus.arrival}
+                  {moment(bus.arrival, "HH:mm").format("hh:mm A")}
                 </h1>
               </div>
               <hr className="border-black" />
