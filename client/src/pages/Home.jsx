@@ -29,23 +29,6 @@ function Home() {
     }
   }, [filters, dispatch]);
 
-  const getBuses = useCallback(async () => {
-    try {
-      dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/buses/get-all-buses");
-
-      dispatch(HideLoading());
-      if (response.data.success) {
-        setBuses(response.data.data);
-      } else {
-        message.error(response.data.message);
-      }
-    } catch (error) {
-      dispatch(HideLoading());
-      message.error(error.message);
-    }
-  }, [dispatch]);
-
   useEffect(() => {
     axiosInstance.get("/api/cities/get-all-cities").then((response) => {
       setCities(response.data.data);
@@ -53,14 +36,10 @@ function Home() {
   }, []);
 
   useCallback(() => {
-    if (filters.from && filters.to && filters.journeyDate) getBuses();
-  }, [filters, getBuses]);
-
-  useCallback(() => {
     if (filters.from && filters.to && filters.journeyDate) {
       getBusesByFilter();
     }
-  }, [filters, getBusesByFilter]);
+  }, [filters.from, filters.to, filters.journeyDate, getBusesByFilter]);
 
   return (
     <>
@@ -167,7 +146,6 @@ function Home() {
           </Row>
         </div>
       </div>
-  
     </>
   );
 }
