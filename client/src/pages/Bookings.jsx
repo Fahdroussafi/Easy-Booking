@@ -244,7 +244,28 @@ function Bookings() {
                             </div>
                           </div>
                           <div className="flex flex-col mx-auto">
-                            <QRCode value={selectedBooking?._id} size={150} />
+                            <QRCode
+                              value={JSON.stringify({
+                                Name: selectedBooking?.user.toString(),
+                                From: selectedBooking?.from.toString(),
+                                To: selectedBooking?.to.toString(),
+                                Departure: moment(
+                                  selectedBooking?.departure
+                                ).format("hh:mm A"),
+
+                                Arrival: moment(
+                                  selectedBooking?.arrival,
+                                  "HH:mm"
+                                ).format("hh:mm A"),
+
+                                Price:
+                                  selectedBooking?.price *
+                                  selectedBooking?.seats.length.toString(),
+                                Seats: selectedBooking?.seats.toString(),
+                                Date: selectedBooking?.journeyDate.toString(),
+                              })}
+                              size={150}
+                            />
                           </div>
 
                           <div className="flex flex-col">
