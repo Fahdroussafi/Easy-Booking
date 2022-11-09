@@ -68,6 +68,20 @@ const GetBusesByFromAndTo = async (req, res) => {
       to: req.query.to,
       journeyDate: req.query.journeyDate,
     });
+
+    buses.forEach(async (bus) => {
+      const journey = new Date(bus.journeyDate);
+      const departure = new Date(
+        `${journey.getFullYear()}-${
+          journey.getMonth() + 1
+        }-${journey.getDate()} ${bus.departure}`
+      );
+
+      if (departure.getTime() - new Date().getTime() < 3600000) {
+        await Bus.findByIdAndUpdate(bus._id, { status: "Completed" });
+      }
+    });
+
     const filteredBuses = buses.filter(
       (bus) => bus.status !== "Completed" && bus.status !== "Running"
     );
