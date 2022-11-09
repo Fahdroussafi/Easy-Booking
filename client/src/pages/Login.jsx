@@ -160,7 +160,7 @@ function Login() {
               Don't have an account?{" "}
               <Link
                 to="/register"
-                className="text-blue-600 hover:text-blue-700"
+                className="text-blue-600 font-bold hover:text-blue-700"
               >
                 Register
               </Link>
