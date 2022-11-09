@@ -36,10 +36,20 @@ const GetAllBuses = async (req, res) => {
       // console.log("departure time is : ", departure);
     });
 
+    const orderedBuses = buses.sort((a, b) => {
+      if (a.status === "Completed" && b.status !== "Completed") {
+        return 1;
+      } else if (a.status !== "Completed" && b.status === "Completed") {
+        return -1;
+      } else {
+        return new Date(a.journeyDate) - new Date(b.journeyDate);
+      }
+    });
+
     res.status(200).send({
       message: "Buses fetched successfully",
       success: true,
-      data: buses,
+      data: orderedBuses,
     });
   } catch (error) {
     res.status(500).send({
