@@ -42,12 +42,7 @@ function Index() {
     if (filters.from && filters.to && filters.journeyDate) {
       getBusesByFilter();
     }
-  }, [
-    filters.from,
-    filters.to,
-    filters.journeyDate,
-    getBusesByFilter,
-  ]);
+  }, [filters.from, filters.to, filters.journeyDate, getBusesByFilter]);
 
   return (
     <>
@@ -67,11 +62,13 @@ function Index() {
             <div className="h-screen overflow-auto overflow-x-hidden">
               <div className="bg-opacity-80">
                 <Row gutter={[15, 15]}>
-                  {buses.map((bus) => (
-                    <div className="w-screen  ">
-                      <Bus bus={bus} />
-                    </div>
-                  ))}
+                  {buses.map((bus, index) => {
+                    return (
+                      <div key={index} className="w-screen p-10 ">
+                        <Bus bus={bus} />
+                      </div>
+                    );
+                  })}
                 </Row>
               </div>
             </div>
