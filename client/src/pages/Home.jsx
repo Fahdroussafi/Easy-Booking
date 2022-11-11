@@ -115,36 +115,22 @@ function Home() {
             </Col>
           </Row>
         </div>
-        <div className="z-20">
-          <Row gutter={[15, 15]}>
-            {buses
-              .filter((bus) => {
-                if (!filters.from && !filters.to && !filters.journeyDate) {
-                  return (
-                    bus.from === filters.from &&
-                    bus.to === filters.to &&
-                    bus.journeyDate === filters.journeyDate
-                  );
-                } else {
-                  return bus;
-                }
-              })
-              .map((bus, index) => {
-                return (
-                  <Col key={index} lg={24} sm={24}>
-                    <Bus bus={bus} />
-                  </Col>
-                );
-              })}
-            {buses.length === 0 && (
-              <div className="flex justify-center w-full">
-                <h1 className="text-2xl font-bold text-gray-500">
-                  No buses found
-                </h1>
-              </div>
-            )}
-          </Row>
-        </div>
+        <Row gutter={[15, 15]}>
+          {buses.map((bus, index) => {
+            return (
+              <Col key={index} lg={24} sm={24}>
+                <Bus bus={bus} />
+              </Col>
+            );
+          })}
+          {buses.length === 0 && (
+            <div className="flex justify-center w-full">
+              <h1 className="text-2xl font-bold text-gray-500">
+                No buses found
+              </h1>
+            </div>
+          )}
+        </Row>
       </div>
     </>
   );
