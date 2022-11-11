@@ -38,15 +38,15 @@ const BookSeat = async (req, res) => {
 
 const GetAllBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find();
+    const bookings = await Booking.find().populate("bus").populate("user");
     res.status(200).send({
-      message: "Bookings fetched successfully",
+      message: "All bookings",
       data: bookings,
       success: true,
     });
   } catch (error) {
     res.status(500).send({
-      message: "No Bookings Found",
+      message: "Failed to get bookings",
       data: error,
       success: false,
     });
