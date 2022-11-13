@@ -52,6 +52,7 @@ function ForgotPassword() {
                     Enter your email address and we'll send you a link to reset
                     your password.
                   </p>
+
                   <Form.Item
                     name="email"
                     initialValue=""
@@ -63,25 +64,32 @@ function ForgotPassword() {
                       },
                     ]}
                   >
-                    <div className="mt-4 flex flex-col">
+                    <div className="relative z-0 mb-6 w-full group">
                       <input
                         type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        className="w-full rounded border border-white/50 bg-transparent px-3 py-2 text-white placeholder:text-white/50 md:max-w-[18rem]"
+                        name="floating_email"
+                        className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none text-white dark:border-blue-500 dark:focus:border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=" "
+                        required
                       />
-                      <div className="mt-5">
-                        <button className="relative inline-flex items-center justify-start px-10 py-3 overflow-hidden font-bold rounded-full group">
-                          <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
-                          <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-gray-100 opacity-100 group-hover:translate-x-0"></span>
-                          <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-black">
-                            Send Reset Code
-                          </span>
-                          <span className="absolute inset-0 border-2 border-blue-600 rounded-full"></span>
-                        </button>
-                      </div>
+                      <label
+                        htmlFor="floating_email"
+                        className="absolute text-sm text-gray-500 dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >
+                        Email address
+                      </label>
                     </div>
                   </Form.Item>
+                  <div className="mt-5">
+                    <button className="relative inline-flex items-center justify-start px-10 py-3 overflow-hidden font-bold rounded-full group">
+                      <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
+                      <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-gray-100 opacity-100 group-hover:translate-x-0"></span>
+                      <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-black">
+                        Send Reset Code
+                      </span>
+                      <span className="absolute inset-0 border-2 border-blue-600 rounded-full"></span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
