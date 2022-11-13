@@ -3,8 +3,6 @@ const Bus = require("../models/busModel");
 const User = require("../models/usersModel");
 const stripe = require("stripe")(process.env.stripe_key);
 const { v4: uuidv4 } = require("uuid");
-const { populate } = require("../models/busModel");
-const mongoose = require("mongoose");
 
 // book seat
 const BookSeat = async (req, res) => {
