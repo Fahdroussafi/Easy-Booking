@@ -103,7 +103,8 @@ const Login = async (req, res) => {
 
 // reset password
 const ResetPassword = async (req, res) => {
-  const { email, redirectUrl } = req.body;
+  const { email } = req.body;
+  const redirectUrl = "http://localhost:3000/reset-password";
 
   // check if email exists
   User.find({ email })
@@ -112,7 +113,7 @@ const ResetPassword = async (req, res) => {
         // user exists
         sendResetEmail(data[0], redirectUrl, res);
       } else {
-        res.json({
+        res.status(400).send({
           status: "FAILED",
           message: "Email does not exist",
         });
@@ -120,7 +121,7 @@ const ResetPassword = async (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.json({
+      res.status(500).send({
         status: "FAILED",
         message: "Something went wrong",
       });
@@ -170,14 +171,15 @@ const ResetPassword = async (req, res) => {
                   .sendMail(mailOptions)
                   .then(() => {
                     // reset email sent and passsword reset record saved
-                    res.json({
+                    res.status(200).send({
                       status: "PENDING",
-                      message: "Password reset email sent",
+                      message:
+                        "Password reset email sent successfully please check your email",
                     });
                   })
                   .catch((error) => {
                     console.log(error);
-                    res.json({
+                    res.status(400).send({
                       status: "FAILED",
                       message: "Password reset email failed",
                     });
@@ -185,7 +187,7 @@ const ResetPassword = async (req, res) => {
               })
               .catch((error) => {
                 console.log(error);
-                res.json({
+                res.status(500).send({
                   status: "FAILED",
                   message: "Cound't save password reset data!",
                 });
@@ -193,7 +195,7 @@ const ResetPassword = async (req, res) => {
           })
           .catch((error) => {
             console.log(error);
-            res.json({
+            res.status(500).send({
               status: "FAILED",
               message:
                 "An error occured while hashing the password reset data!",
@@ -203,7 +205,7 @@ const ResetPassword = async (req, res) => {
       .catch((error) => {
         // error while clearing existing reset records
         console.log(error);
-        res.json({
+        res.status(400).send({
           status: "FAILED",
           message: "Clearing existing password reset records failed",
         });
@@ -213,7 +215,8 @@ const ResetPassword = async (req, res) => {
 
 // actually reset password
 const UpdatePassword = async (req, res) => {
-  let { userId, resetString, newPassword } = req.body;
+  let { userId, resetString } = req.params;
+  let { newPassword } = req.body;
 
   PasswordReset.find({ userId })
     .then((result) => {
@@ -229,7 +232,7 @@ const UpdatePassword = async (req, res) => {
             .then(
               // Reset record deleted successfully
               () => {
-                res.json({
+                res.status(410).send({
                   status: "FAILED",
                   message: "Password reset link has expired",
                 });
@@ -238,7 +241,7 @@ const UpdatePassword = async (req, res) => {
             .catch((error) => {
               // deletion failed
               console.log(error);
-              res.json({
+              res.status(400).send({
                 status: "FAILED",
                 message: "Clearing password reset record failed",
               });
@@ -268,14 +271,14 @@ const UpdatePassword = async (req, res) => {
 
                           .then(() => {
                             // both user record and reset record updated
-                            res.json({
+                            res.status(200).send({
                               status: "SUCCESS",
                               message: "Password has been reset successfully.",
                             });
                           })
                           .catch((error) => {
                             console.log(error);
-                            res.json({
+                            res.status(400).send({
                               status: "FAILED",
                               message:
                                 "An error occured while finalizing password reset.",
@@ -284,7 +287,7 @@ const UpdatePassword = async (req, res) => {
                       })
                       .catch((error) => {
                         console.log(error);
-                        res.json({
+                        res.status(400).send({
                           status: "FAILED",
                           message: "Updting user password failed.",
                         });
@@ -292,7 +295,7 @@ const UpdatePassword = async (req, res) => {
                   })
                   .catch((error) => {
                     console.log(error);
-                    res.json({
+                    res.status(400).send({
                       status: "FAILED",
                       message:
                         "An error occured while hashing the new password.",
@@ -300,7 +303,7 @@ const UpdatePassword = async (req, res) => {
                   });
               } else {
                 // Existing record but incorrect reset string passed.
-                res.json({
+                res.status(410).send({
                   status: "FAILED",
                   message: "Invalid password reset details passed.",
                 });
@@ -309,7 +312,7 @@ const UpdatePassword = async (req, res) => {
 
             .catch((error) => {
               console.log(error);
-              res.json({
+              res.status(400).send({
                 status: "FAILED",
                 message: "Comparing password reset strings failed.",
               });
@@ -317,15 +320,15 @@ const UpdatePassword = async (req, res) => {
         }
       } else {
         // Password reset record doesn't exist
-        res.json({
+        res.status(400).send({
           status: "FAILED",
-          message: "Password reset request not found",
+          message: "Password link either doesn't exist or has expired.",
         });
       }
     })
     .catch((error) => {
       console.log(error);
-      res.json({
+      res.status(400).send({
         status: "FAILED",
         message: "Cheching for exsitng password reset records failed.",
       });
