@@ -16,7 +16,6 @@ const AdminUsers = lazy(() => import("./pages/Admin/AdminUsers"));
 const Home = lazy(() => import("./pages/Home"));
 const BookNow = lazy(() => import("./pages/BookNow"));
 const Bookings = lazy(() => import("./pages/Bookings"));
-const Profile = lazy(() => import("./pages/Profile"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 const UpdatePassword = lazy(() => import("./pages/UpdatePassword"));
 const EmailSent = lazy(() => import("./pages/EmailSent"));
@@ -98,15 +97,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <BookNow />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
                 </ProtectedRoute>
               }
             />

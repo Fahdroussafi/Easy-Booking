@@ -20,11 +20,6 @@ function DefaultLayout({ children }) {
       icon: "ri-file-list-line",
     },
     {
-      name: "Profile",
-      path: "/profile",
-      icon: "ri-user-line",
-    },
-    {
       name: "Logout",
       path: "/logout",
       icon: "ri-logout-box-line",
