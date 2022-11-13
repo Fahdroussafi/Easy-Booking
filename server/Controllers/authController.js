@@ -104,6 +104,7 @@ const Login = async (req, res) => {
 // reset password
 const ResetPassword = async (req, res) => {
   const { email } = req.body;
+  const name = User.name;
   const redirectUrl = "http://localhost:3000/reset-password";
 
   // check if email exists
@@ -128,7 +129,7 @@ const ResetPassword = async (req, res) => {
     });
 
   // send reset email
-  const sendResetEmail = ({ _id, email }, redirectUrl, res) => {
+  const sendResetEmail = ({ _id, email, name }, redirectUrl, res) => {
     const resetString = uuidv4() + _id;
 
     // First, we clear all existing reset records
@@ -144,11 +145,21 @@ const ResetPassword = async (req, res) => {
           to: email,
           subject: "Password Reset",
           html: `
-            <p>We heard that you lost the password.</p> <p>Don't worry, use the link below to reset it.</p>
-            <p>This link <b>expires in 60 minutes</b>.</p><p>Press 
-            <a href=${
-              redirectUrl + "/" + _id + "/" + resetString
-            }>here</a> to proceed.</p>`,
+          Hello ${name},
+          <br/>
+          <br/>
+          Please click on the link below to reset your password.
+          <br/>
+          <br/>
+          <a href="${redirectUrl}/${_id}/${resetString}">Reset Password</a>
+          the link will expire in 1 hour.
+          <br/>
+          <br/>
+          If you did not request this, please ignore this email.
+          <br/>
+          <br/>
+          Thank you.
+          `,
         };
 
         // hash the reset string
