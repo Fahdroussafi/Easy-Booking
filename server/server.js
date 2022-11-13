@@ -20,10 +20,3 @@ app.use("/api/cities", require("./routes/citiesRoutes"));
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-// trip_type [
-//   type: Boolean,
-//   enum ["premium","normal","vip","economy"]
-//   default: "normal",
-// required : true
-// ]
