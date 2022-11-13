@@ -1,6 +1,7 @@
 import React from "react";
 
 function EmailSent() {
+  const email = localStorage.getItem("email");
   return (
     <div className="from-gray-50 to-blue-500 bg-gradient-to-r h-screen flex items-center justify-center p-12 py-6">
       <div className="mx-auto w-full max-w-screen-lg bg-blue-700 px-5 py-10 rounded-full">
@@ -14,8 +15,8 @@ function EmailSent() {
           </div>
           <div className="flex items-center">
             <div className="mx-auto md:mx-0">
-              <h3 className="text-4xl font-bold text-white">
-                Email Sent Successfully
+              <h3 className="text-3xl font-bold text-white">
+                Email Sent Successfully to {email}
               </h3>
               <p className="mt-2 max-w-[20rem] text-lg text-white/80">
                 Check your email for a link to reset your password. If it
