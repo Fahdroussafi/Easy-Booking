@@ -38,7 +38,7 @@ const BookSeat = async (req, res) => {
       text: `Hello ${user.name}, your booking details are as follows:
       Bus: ${bus.name}
       Seats: ${req.body.seats}
-      Arrival Time: ${moment(bus.departure, "HH:mm:ss").format("hh:mm A")}
+      Departure Time: ${moment(bus.departure, "HH:mm:ss").format("hh:mm A")}
       Arrival Time: ${moment(bus.arrival, "HH:mm:ss").format("hh:mm A")}
       Journey Date: ${bus.journeyDate}
       Total Price: ${bus.price * req.body.seats.length} MAD
