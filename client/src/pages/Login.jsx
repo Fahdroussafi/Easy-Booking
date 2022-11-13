@@ -165,6 +165,15 @@ function Login() {
                 Register
               </Link>
             </p>
+            <p className="text-center text-base text-gray-600">
+              Forgot Password ?{" "}
+              <Link
+                to="/forgot-password"
+                className="text-blue-600 font-bold hover:text-blue-700"
+              >
+                Reset it
+              </Link>
+            </p>
           </div>
         </div>
       </Form>
