@@ -19,11 +19,11 @@ const GetUserById = async (req, res) => {
   }
 };
 
-
 // get all users
 const getAllClients = async (req, res) => {
   try {
-    const users = await User.find();
+    // if the user is an admin, dont display him in the list of users
+    const users = await User.find({ isAdmin: false });
     res.send({
       message: "Users fetched successfully",
       success: true,
