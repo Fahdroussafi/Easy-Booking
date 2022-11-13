@@ -10,6 +10,6 @@ const {
 router.post("/create-user", CreateUser);
 router.post("/login", Login);
 router.post("/requestPasswordReset", ResetPassword);
-router.post("/resetPassword", UpdatePassword);
+router.post("/resetPassword/:userId/:resetString", UpdatePassword);
 
 module.exports = router;
