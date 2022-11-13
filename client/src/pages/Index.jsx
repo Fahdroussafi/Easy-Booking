@@ -177,7 +177,7 @@ function Index() {
                 <div className="flex justify-center gap-4 mt-5 w-full">
                   {buses.length === 0 && (
                     <div className="text-center text-white text-2xl">
-                      Search for a bus
+                      Make your search now
                     </div>
                   )}
                 </div>
