@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from "../../helpers/axiosInstance";
-import { message, Table, Modal } from "antd";
+import { message, Table } from "antd";
 import { HideLoading, ShowLoading } from "../../redux/alertsSlice";
 import PageTitle from "../../components/PageTitle";
 import moment from "moment";
