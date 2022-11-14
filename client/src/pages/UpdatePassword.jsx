@@ -12,9 +12,6 @@ function UpdatePassword() {
   const onFinish = async (values) => {
     const resetString = window.location.pathname.split("/")[3];
     const userId = window.location.pathname.split("/")[2];
-    console.log(resetString, userId);
-    console.log(userId);
-
     // compare password and confirm password
     if (values.newPassword !== values.confirmPassword) {
       message.error("Password and Confirm Password must be same");
