@@ -250,7 +250,8 @@ function Bookings() {
                                 From: selectedBooking?.from.toString(),
                                 To: selectedBooking?.to.toString(),
                                 Departure: moment(
-                                  selectedBooking?.departure
+                                  selectedBooking?.departure,
+                                  "HH:mm"
                                 ).format("hh:mm A"),
 
                                 Arrival: moment(
