@@ -1,5 +1,4 @@
 {
-  "homepage": "https://Fahdroussafi.github.io/Easy-Booking",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -25,8 +24,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -51,7 +48,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.12",
-    "gh-pages": "^4.0.0",
     "postcss": "^8.4.17",
     "tailwindcss": "^3.1.8"
   },
