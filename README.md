@@ -1,4 +1,4 @@
-# MERN Stack Bus Ticket Booking App (WORK IN PROGRESS)
+# MERN Stack Bus Ticket Booking App
 
 ### This website will include the following features :
 
