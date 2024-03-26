@@ -1,0 +1,48 @@
+# compiled output
+/dist
+/node_modules
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+prisma/migrations*
+lerna-debug.log*
+yarn.lock
+package-lock.json
+public
+uploads
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+.idea
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.env
+
+/docs
+/scripts
+
+/tmpAttachments
+/templates/certificates/Fw_ Docs SIS suite/
+/templates/certificates/SIS- Documents administratifs V1/
+/TryStuff

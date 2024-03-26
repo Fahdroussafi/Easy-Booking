@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  fullname  String
+  address   String
+  phone     String
+  cin       String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Booking   Booking[]
+  Admin     Admin[]
+  Token     Token[]
+}
+
+model Bus {
+  id        Int       @id @default(autoincrement())
+  busNumber String
+  capacity  Int
+  model     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Booking   Booking[]
+}
+
+model Route {
+  id          Int       @id @default(autoincrement())
+  origin      String
+  destination String
+  distance    Float
+  duration    Int
+  fare        Float
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Booking     Booking[]
+}
+
+model Booking {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  busId       Int
+  bus         Bus      @relation(fields: [busId], references: [id])
+  routeId     Int
+  route       Route    @relation(fields: [routeId], references: [id])
+  bookingDate DateTime
+  seatNumber  Int
+  status      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  fullName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Token {
+  id Int @id @unique @default(autoincrement())
+
+  token        String @unique
+  refreshToken String @unique
+  userId       Int    @unique
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  deleted   Boolean   @default(false)
+
+  @@map("tokens")
+}
+
+model configuration {
+  id Int @id @unique @default(autoincrement())
+
+  tokenExpireDuration String?
+  appExpireAfter      Int?
+
+  @@map("configurations")
+}
