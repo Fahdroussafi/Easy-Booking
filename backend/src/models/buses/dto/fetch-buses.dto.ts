@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PaginationDto } from 'src/prisma/dto/pagination.dto';
 import { IMeta } from 'src/prisma/pagination.interface';
-import { User } from '../entities/user.entity';
+import { Bus } from '../entities/bus.entity';
 
-export class FetchUserDto extends PaginationDto {}
+export class FetchBusDto extends PaginationDto {}
 
 export class BusPaginatedResponse {
   @ApiProperty({ isArray: true, description: 'response items' })
-  items: Array<User>;
+  items: Array<Bus>;
   @ApiProperty({ description: 'Pagination information' })
   meta: IMeta;
 }
