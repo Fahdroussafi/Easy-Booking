@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "email": "user@user.com",
+    "password": "$argon2id$v=19$m=65536,t=3,p=1$FohxPU9+8H+st+1NTyHTrA$2M4dFjBb9pSxgE+dHQVj8wVdCN3j19zDPEi6PQTMTlE",
+    "fullname": "John Doe",
+    "address": "123 Main St, Anytown, USA",
+    "phone": "123-456-7890",
+    "cin": "A1234567",
+    "createdAt": "2024-03-27T12:00:00Z",
+    "updatedAt": "2024-03-27T12:00:00Z"
+  },
+  {
+    "id": 2,
+    "email": "jane@example.com",
+    "password": "$argon2id$v=19$m=65536,t=3,p=1$1u9LFkxyYhlQoQ0Hq+rlxw$gV2YUW/UKqy6sXbq0wddRSjZ6BrEMi/fCh/mZ8s5g8A",
+    "fullname": "Jane Smith",
+    "address": "456 Elm St, Othertown, USA",
+    "phone": "234-567-8901",
+    "cin": "B2345678",
+    "createdAt": "2024-03-27T12:00:00Z",
+    "updatedAt": "2024-03-27T12:00:00Z"
+  },
+  {
+    "id": 3,
+    "email": "jim@example.com",
+    "password": "$argon2id$v=19$m=65536,t=3,p=1$91yYZYc2+XSfXpPZ05r7Ug$RGgAkSDJRFm9QzJ8L8XkDW79mS45lGrMjxUaKDgZn5g",
+    "fullname": "Jim Johnson",
+    "address": "789 Oak St, Anycity, USA",
+    "phone": "345-678-9012",
+    "cin": "C3456789",
+    "createdAt": "2024-03-27T12:00:00Z",
+    "updatedAt": "2024-03-27T12:00:00Z"
+  },
+  {
+    "id": 4,
+    "email": "alex@example.com",
+    "password": "$argon2id$v=19$m=65536,t=3,p=1$3BNoI/HVRXiGZb6xMhN9yA$h1FqX7w5lTzYdno7YYZGZQH9UbR7YsPPFZ7+VgUEVsA",
+    "fullname": "Alex Brown",
+    "address": "101 Pine St, Somecity, USA",
+    "phone": "456-789-0123",
+    "cin": "D4567890",
+    "createdAt": "2024-03-27T12:00:00Z",
+    "updatedAt": "2024-03-27T12:00:00Z"
+  },
+  {
+    "id": 5,
+    "email": "sara@example.com",
+    "password": "$argon2id$v=19$m=65536,t=3,p=1$wg/tJ7fTXy9B6IW6fXf6GQ$zCPXTlSPk5v8OAJiqy4N0QGr1SgFAfICujEEGDKwUNk",
+    "fullname": "Sara Wilson",
+    "address": "222 Maple St, Anystate, USA",
+    "phone": "567-890-1234",
+    "cin": "E5678901",
+    "createdAt": "2024-03-27T12:00:00Z",
+    "updatedAt": "2024-03-27T12:00:00Z"
+  }
+]
