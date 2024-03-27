@@ -18,7 +18,6 @@ async function bootstrap() {
     .setDescription('easy-booking API Description')
     .setVersion('0.1')
     .setExternalDoc('Postman Collection', '/api-json')
-    .addTag('easy-booking')
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT', in: 'header' },
       'Autorization',
