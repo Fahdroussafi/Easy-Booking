@@ -5,14 +5,16 @@ import * as express from 'express';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
+import * as compression from 'compression';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.use(compression());
+  
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ extended: true, limit: '50mb' }));
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
-
+  
   const config = new DocumentBuilder()
     .setTitle('easy-booking Api')
     .setDescription('easy-booking API Description')
