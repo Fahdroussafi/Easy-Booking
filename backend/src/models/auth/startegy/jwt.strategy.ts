@@ -4,17 +4,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { PrismaClient } from '@prisma/client';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Express {
-    interface User {
-      id: number;
-      email: string;
-      fullName: string;
-    }
-  }
-}
-
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(

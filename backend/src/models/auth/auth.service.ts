@@ -119,7 +119,6 @@ export class AuthService {
         email: dto.email,
       },
     });
-    console.log(user);
     // compare the password
     if (!user) {
       throw new ForbiddenException('Invalid email');
